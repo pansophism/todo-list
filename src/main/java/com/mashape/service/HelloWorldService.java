@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 @Path("/hello")
 public class HelloWorldService {
 
-  private final Logger LOG = LoggerFactory.getLogger(HelloWorldService.class);
+  private final Logger LOG = LoggerFactory.getLogger(getClass());
 
   @GET
   @Path("/{param}")
