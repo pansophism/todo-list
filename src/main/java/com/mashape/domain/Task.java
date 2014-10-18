@@ -1,5 +1,7 @@
 package com.mashape.domain;
 
+import com.google.common.base.Objects;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -67,4 +69,36 @@ public class Task
     this.done = done;
   }
 
+  @Override
+  public String toString() {
+    return Objects.toStringHelper(this)
+      .add("TaskID", getTaskId())
+      .add("Title", getTitle())
+      .add("Content", getContent())
+      .add("isDone", isDone())
+      .toString();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(getTaskId(), getContent(), getTitle());
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if(this == other) {
+      return true;
+    }
+
+    if(other == null || !(other instanceof Task)) {
+      return false;
+    }
+
+    Task otherTask = (Task)other;
+
+    return Objects.equal(getTaskId(), otherTask.getTaskId())
+      && Objects.equal(getTitle(), otherTask.getTitle())
+      && Objects.equal(getContent(), otherTask.getContent())
+      && Objects.equal(isDone(), otherTask.isDone());
+  }
 }
