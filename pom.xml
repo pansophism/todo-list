@@ -155,7 +155,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <generateUniqueDependencyReducedPom>true</generateUniqueDependencyReducedPom>
+                            <generateUniqueDependencyReducedPom>false</generateUniqueDependencyReducedPom>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <shadedArtifactAttached>true</shadedArtifactAttached>
                             <shadedClassifierName>executable</shadedClassifierName>
