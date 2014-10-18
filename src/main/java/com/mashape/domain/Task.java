@@ -2,6 +2,9 @@ package com.mashape.domain;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Created by yxzhao on 10/17/14.
  */
@@ -20,6 +23,9 @@ public class Task
 
   public Task(String title, String content, boolean done, long taskId)
   {
+    checkNotNull(title, "Task title cannot be null.", title);
+    checkArgument(taskId > 0, "Task ID must be greater than 0", taskId);
+
     this.title = title;
     this.content = content;
     this.done = done;

@@ -1,5 +1,8 @@
 package com.mashape.domain;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Created by yxzhao on 10/18/14.
  */
@@ -7,12 +10,17 @@ public class Message
 {
   private String from;
   private String to;
-  private String boday;
+  private String body;
 
-  public Message(String from, String to, String boday) {
+  public Message(String from, String to, String body) {
+
+    checkNotNull(to, "Has to specify destination of a message", to);
+    checkNotNull(from, "Has to specify source of a message", from);
+    checkNotNull(body, "Message boday cannot be null", body);
+
     this.from = from;
     this.to = to;
-    this.boday = boday;
+    this.body = body;
   }
 
   public String getFrom()
@@ -25,8 +33,8 @@ public class Message
     return to;
   }
 
-  public String getBoday()
+  public String getBody()
   {
-    return boday;
+    return body;
   }
 }

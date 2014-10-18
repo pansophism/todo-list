@@ -1,6 +1,7 @@
 package com.mashape;
 
 import com.google.inject.Singleton;
+import com.sun.jersey.spi.container.servlet.ServletContainer;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -16,28 +17,28 @@ public class Launcher
 
   public static void main(String[] args) throws Exception
   {
-//    Server server = new Server(8080);
-//
-//    ServletContextHandler context = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
-//    context.setContextPath("/");
-//    server.setHandler(context);
-//
-//    ServletHolder jerseyServlet = context.addServlet(org.glassfish.jersey.servlet.ServletContainer.class, "/webapi/*");
-//    jerseyServlet.setInitOrder(1);
-//    jerseyServlet.setInitParameter("jersey.config.server.provider.packages","com.mashape.controllers");
-//
-//    ServletHolder staticServlet = context.addServlet(DefaultServlet.class,"/*");
-//    staticServlet.setInitParameter("resourceBase","src/main/webapp");
-//    staticServlet.setInitParameter("pathInfoOnly","true");
-//
-//    try
-//    {
-//      server.start();
-//      server.join();
-//    }
-//    catch (Throwable t)
-//    {
-//      t.printStackTrace(System.err);
-//    }
+    Server server = new Server(8080);
+
+    ServletContextHandler context = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
+    context.setContextPath("/");
+    server.setHandler(context);
+
+    ServletHolder jerseyServlet = context.addServlet(ServletContainer.class, "/*");
+    jerseyServlet.setInitOrder(1);
+    jerseyServlet.setInitParameter("com.sun.jersey.config.property.packages","com.mashape.service");
+
+    ServletHolder staticServlet = context.addServlet(DefaultServlet.class,"/static/*");
+    staticServlet.setInitParameter("resourceBase","src/main/webapp");
+    staticServlet.setInitParameter("pathInfoOnly","true");
+
+    try
+    {
+      server.start();
+      server.join();
+    }
+    catch (Throwable t)
+    {
+      t.printStackTrace(System.err);
+    }
   }
 }

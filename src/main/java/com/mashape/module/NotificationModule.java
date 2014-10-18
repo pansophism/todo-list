@@ -1,7 +1,7 @@
 package com.mashape.module;
 
 import com.google.inject.AbstractModule;
-import com.mashape.interfaces.NotificationServiceIF;
+import com.mashape.interfaces.NotificationService;
 import com.mashape.service.NotificationServiceImpl;
 
 /**
@@ -13,6 +13,6 @@ public class NotificationModule extends AbstractModule
   @Override
   protected void configure()
   {
-    bind(NotificationServiceIF.class).to(NotificationServiceImpl.class);
+    bind(NotificationService.class).to(NotificationServiceImpl.class);
   }
 }

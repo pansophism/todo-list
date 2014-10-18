@@ -1,5 +1,6 @@
 package com.mashape.service;
 
+import com.mashape.interfaces.NotificationService;
 import com.twilio.sdk.TwilioRestClient;
 import com.twilio.sdk.TwilioRestException;
 import com.twilio.sdk.resource.factory.MessageFactory;
@@ -13,7 +14,7 @@ import java.util.List;
 /**
  * Created by yxzhao on 10/17/14.
  */
-public class TwilioNotificationImpl
+public class TwilioNotificationImpl implements NotificationService
 {
 
   // Find your Account Sid and Token at twilio.com/user/account
@@ -34,5 +35,11 @@ public class TwilioNotificationImpl
     MessageFactory messageFactory = client.getAccount().getMessageFactory();
     Message message = messageFactory.create(params);
     System.out.println(message.getSid());
+  }
+
+  @Override
+  public void notify(com.mashape.domain.Message msg)
+  {
+
   }
 }
