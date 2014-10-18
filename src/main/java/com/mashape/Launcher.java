@@ -30,10 +30,6 @@ public class Launcher
     jerseyServlet.setInitOrder(1);
     jerseyServlet.setInitParameter("com.sun.jersey.config.property.packages","com.mashape.service");
 
-    ServletHolder staticServlet = context.addServlet(DefaultServlet.class,"/static/*");
-    staticServlet.setInitParameter("resourceBase","src/main/webapp");
-    staticServlet.setInitParameter("pathInfoOnly","true");
-
     try
     {
       server.start();
