@@ -114,6 +114,12 @@
             <version>3.4.6</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>2.12.2</version>
+        </dependency>
+
     </dependencies>
     <build>
         <finalName>todo-list</finalName>

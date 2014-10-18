@@ -18,6 +18,18 @@ public class Task
   private String content;
   private boolean done;
 
+  public Task()
+  {
+  }
+
+  public Task(String title, String content, boolean done, long taskId)
+  {
+    this.title = title;
+    this.content = content;
+    this.done = done;
+    this.taskId = taskId;
+  }
+
   public long getTaskId()
   {
     return taskId;
