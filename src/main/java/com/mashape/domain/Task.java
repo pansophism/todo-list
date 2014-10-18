@@ -1,7 +1,5 @@
 package com.mashape.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -11,9 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Task")
 public class Task
 {
-  @JsonIgnore
   private long taskId;
-
   private String title;
   private String content;
   private boolean done;

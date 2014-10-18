@@ -21,7 +21,7 @@ public class HelloWorldService {
   private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 
-@GET
+  @GET
   @Path("/task")
   public Response getTask(@PathParam("param") String msg) {
 
@@ -29,9 +29,9 @@ public class HelloWorldService {
 
     String output = "Jersey say : " + msg;
     Task task = new Task();
-  task.setTitle("title");
-  task.setContent("content");
-  task.setDone(true);
+    task.setTitle("title");
+    task.setContent("content");
+    task.setDone(true);
 
     return Response.status(200).entity(task).build();
 

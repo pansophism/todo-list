@@ -151,7 +151,7 @@
                             <value>log4j-dev.xml</value>
                         </systemProperty>
                     </systemProperties>
-                    <scanIntervalSeconds>3</scanIntervalSeconds>
+                    <scanIntervalSeconds>1</scanIntervalSeconds>
                     <reload>automatic</reload>
                 </configuration>
             </plugin>
