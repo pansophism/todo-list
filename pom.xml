@@ -4,10 +4,15 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>mashape</groupId>
     <artifactId>todo-list</artifactId>
-    <packaging>war</packaging>
     <version>0.1</version>
     <name>todo-list Maven Webapp</name>
     <url>http://maven.apache.org</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
     <dependencies>
 
         <dependency>
@@ -129,6 +134,29 @@
                 <version>2.3.2</version>
             </plugin>
             <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.mashape.Launcher</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>2.4</version>
@@ -148,7 +176,7 @@
                     <systemProperties>
                         <systemProperty>
                             <name>log4j.configuration</name>
-                            <value>log4j-dev.xml</value>
+                            <value>log4j.xml</value>
                         </systemProperty>
                     </systemProperties>
                     <scanIntervalSeconds>1</scanIntervalSeconds>
@@ -156,6 +184,12 @@
                 </configuration>
             </plugin>
         </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
     </build>
 
     <repositories>
