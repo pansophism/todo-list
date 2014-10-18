@@ -19,7 +19,7 @@ public class TaskDaoMongoImpl implements TaskDao {
 
     private final DB mongoDB;
 
-    private final String collectionName = "task";
+    private static final String COLLECTIONNAME = "task";
     private final ObjectMapper mapper = new ObjectMapper();
     private final AppConfig config = AppConfig.getInstance();
 
@@ -34,7 +34,7 @@ public class TaskDaoMongoImpl implements TaskDao {
     @Override
     public Task get(final long id) throws IOException {
         BasicDBObject query = new BasicDBObject("id", id);
-        DBObject obj = mongoDB.getCollection(collectionName).findOne(query);
+        DBObject obj = mongoDB.getCollection(COLLECTIONNAME).findOne(query);
         return mapper.readValue(obj.toString(), Task.class);
     }
 
@@ -53,14 +53,14 @@ public class TaskDaoMongoImpl implements TaskDao {
     @Override
     public boolean delete(final long id) {
         BasicDBObject dbObject = new BasicDBObject("id", id);
-        mongoDB.getCollection(collectionName).remove(dbObject);
+        mongoDB.getCollection(COLLECTIONNAME).remove(dbObject);
         return false;
     }
 
     @Override
     public boolean delete(final Task task) {
         BasicDBObject dbObject = new BasicDBObject("id", task.getTaskId());
-        mongoDB.getCollection(collectionName).remove(dbObject);
+        mongoDB.getCollection(COLLECTIONNAME).remove(dbObject);
         return false;
     }
 }

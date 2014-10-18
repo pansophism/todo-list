@@ -18,7 +18,7 @@ import javax.ws.rs.core.Response;
 @Path("/hello")
 public class HelloWorldService {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private static final Logger LOG = LoggerFactory.getLogger(HelloWorldService.class);
 
 
     @GET
@@ -26,7 +26,7 @@ public class HelloWorldService {
     @Produces(MediaType.APPLICATION_JSON)
     public final Response getTask(@PathParam("param") final String msg) {
 
-        logger.info("User input : " + msg);
+        LOG.info("User input : " + msg);
 
         String output = "Jersey say : " + msg;
         Task task = new Task();

@@ -9,9 +9,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public class Constants {
 
     public enum Fileds {
-        Title("TITLE"),
-        Content("CONTENT"),
-        Done("DONE"),
+        TITLE("TITLE"),
+        CONTENT("CONTENT"),
+        DONE("DONE"),
         ID("ID");
 
         private final String value;

@@ -1,6 +1,5 @@
 package com.mashape;
 
-import com.google.inject.Singleton;
 import com.mashape.common.AppConfig;
 import com.sun.jersey.spi.container.servlet.ServletContainer;
 import org.eclipse.jetty.server.Server;
@@ -11,15 +10,14 @@ import org.eclipse.jetty.servlet.ServletHolder;
  * Created by yxzhao on 10/17/14.
  */
 
-@Singleton
 public final class Launcher {
-
-    private Launcher() {
-    }
 
     private static final AppConfig CONFIG = AppConfig.getInstance();
     private static final int PORT = CONFIG.getInt("server.port", 8080);
     private static final String PACKAGETOSCAN = "com.mashape.service";
+
+    private Launcher() {
+    }
 
     public static void main(final String[] args) throws Exception {
         Server server = new Server(PORT);
@@ -32,11 +30,7 @@ public final class Launcher {
         jerseyServlet.setInitOrder(1);
         jerseyServlet.setInitParameter("com.sun.jersey.config.property.packages", PACKAGETOSCAN);
 
-        try {
-            server.start();
-            server.join();
-        } catch (Throwable t) {
-            t.printStackTrace(System.err);
-        }
+        server.start();
+        server.join();
     }
 }
