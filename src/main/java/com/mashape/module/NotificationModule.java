@@ -7,12 +7,10 @@ import com.mashape.service.NotificationServiceImpl;
 /**
  * Created by yxzhao on 10/17/14.
  */
-public class NotificationModule extends AbstractModule
-{
+public class NotificationModule extends AbstractModule {
 
-  @Override
-  protected void configure()
-  {
-    bind(NotificationService.class).to(NotificationServiceImpl.class);
-  }
+    @Override
+    protected final void configure() {
+        bind(NotificationService.class).to(NotificationServiceImpl.class);
+    }
 }

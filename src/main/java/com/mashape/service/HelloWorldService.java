@@ -18,23 +18,23 @@ import javax.ws.rs.core.Response;
 @Path("/hello")
 public class HelloWorldService {
 
-  private final Logger LOG = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
 
-  @GET
-  @Path("/task")
-  @Produces(MediaType.APPLICATION_JSON)
-  public Response getTask(@PathParam("param") String msg) {
+    @GET
+    @Path("/task")
+    @Produces(MediaType.APPLICATION_JSON)
+    public final Response getTask(@PathParam("param") final String msg) {
 
-    LOG.info("User input : " + msg);
+        logger.info("User input : " + msg);
 
-    String output = "Jersey say : " + msg;
-    Task task = new Task();
-    task.setTitle("title");
-    task.setContent("content");
-    task.setDone(true);
+        String output = "Jersey say : " + msg;
+        Task task = new Task();
+        task.setTitle("title");
+        task.setContent("content");
+        task.setDone(true);
 
-    return Response.status(200).entity(task).build();
+        return Response.status(Response.Status.OK).entity(task).build();
 
-  }
+    }
 }

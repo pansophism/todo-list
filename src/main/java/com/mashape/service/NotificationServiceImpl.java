@@ -6,12 +6,10 @@ import com.mashape.interfaces.NotificationService;
 /**
  * Created by yxzhao on 10/17/14.
  */
-public class NotificationServiceImpl implements NotificationService
-{
+public class NotificationServiceImpl implements NotificationService {
 
-  @Override
-  public void notify(Message msg)
-  {
+    @Override
+    public void notify(final Message msg) {
 
-  }
+    }
 }

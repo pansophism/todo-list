@@ -12,27 +12,24 @@ import org.slf4j.LoggerFactory;
  */
 public class AppConfig extends CompositeConfiguration {
 
-  private static final Logger LOG = LoggerFactory.getLogger(AppConfig.class);
-  private static AppConfig instance;
+    private static final Logger LOG = LoggerFactory.getLogger(AppConfig.class);
+    private static AppConfig instance;
 
-  public synchronized static AppConfig getInstance() {
-   if(instance == null) {
-     initProperties();
-   }
-    return instance;
-  }
+    public static synchronized AppConfig getInstance() {
+        if (instance == null) {
+            initProperties();
+        }
+        return instance;
+    }
 
-  private static void initProperties() {
-    instance = new AppConfig();
-    instance.addConfiguration(new SystemConfiguration());
-    try
-    {
-      instance.addConfiguration(new PropertiesConfiguration("instance.properties"));
+    private static void initProperties() {
+        instance = new AppConfig();
+        instance.addConfiguration(new SystemConfiguration());
+        try {
+            instance.addConfiguration(new PropertiesConfiguration("instance.properties"));
+        } catch (ConfigurationException e) {
+            LOG.error("ConfigurationException : ", e);
+            throw new RuntimeException("Cannot find instance.properties. Not able to proceed.");
+        }
     }
-    catch (ConfigurationException e)
-    {
-      LOG.error("ConfigurationException : ", e);
-      throw new RuntimeException("Cannot find instance.properties. Not able to proceed.");
-    }
-  }
 }

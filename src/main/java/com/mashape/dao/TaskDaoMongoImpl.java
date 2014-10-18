@@ -1,6 +1,7 @@
 package com.mashape.dao;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mashape.common.AppConfig;
 import com.mashape.domain.Task;
 import com.mashape.interfaces.TaskDao;
 import com.mongodb.BasicDBObject;
@@ -16,54 +17,50 @@ import java.net.UnknownHostException;
  */
 public class TaskDaoMongoImpl implements TaskDao {
 
-  private final DB mongoDB;
+    private final DB mongoDB;
 
-  private final String collectionName = "task";
-  private final ObjectMapper mapper = new ObjectMapper();
+    private final String collectionName = "task";
+    private final ObjectMapper mapper = new ObjectMapper();
+    private final AppConfig config = AppConfig.getInstance();
 
-  public TaskDaoMongoImpl() throws UnknownHostException
-  {
-    MongoClient mongoClient;
-    mongoClient = new MongoClient("localhost" , 27017 );
-    mongoDB = mongoClient.getDB("task");
-  }
+    private final int port = config.getInt("", 27017);
 
-  @Override
-  public Task get(long id) throws IOException
-  {
-    BasicDBObject query = new BasicDBObject("id", id);
-    DBObject obj = mongoDB.getCollection(collectionName).findOne(query);
-    return mapper.readValue(obj.toString(), Task.class);
-  }
+    public TaskDaoMongoImpl() throws UnknownHostException {
+        MongoClient mongoClient;
+        mongoClient = new MongoClient("localhost", port);
+        mongoDB = mongoClient.getDB("task");
+    }
 
-  @Override
-  public boolean update(Task task)
-  {
-    return false;
-  }
+    @Override
+    public Task get(final long id) throws IOException {
+        BasicDBObject query = new BasicDBObject("id", id);
+        DBObject obj = mongoDB.getCollection(collectionName).findOne(query);
+        return mapper.readValue(obj.toString(), Task.class);
+    }
 
-  @Override
-  public boolean insert(Task task) throws IOException
-  {
-    Task oldObj = get(task.getTaskId());
-    BasicDBObject dbObject = new BasicDBObject("id", task.getTaskId());
-//    mongoDB.getCollection(collectionName).update(dbObject, mapper.writeValueAsString(task));
-    return false;
-  }
+    @Override
+    public boolean update(final Task task) {
+        return false;
+    }
 
-  @Override
-  public boolean delete(long id)
-  {
-    BasicDBObject dbObject = new BasicDBObject("id", id);
-    mongoDB.getCollection(collectionName).remove(dbObject);
-    return false;
-  }
+    @Override
+    public boolean insert(final Task task) throws IOException {
+        Task oldObj = get(task.getTaskId());
+        BasicDBObject dbObject = new BasicDBObject("id", task.getTaskId());
+        return false;
+    }
 
-  @Override
-  public boolean delete(Task task)
-  {
-    BasicDBObject dbObject = new BasicDBObject("id", task.getTaskId());
-    mongoDB.getCollection(collectionName).remove(dbObject);
-    return false;
-  }
+    @Override
+    public boolean delete(final long id) {
+        BasicDBObject dbObject = new BasicDBObject("id", id);
+        mongoDB.getCollection(collectionName).remove(dbObject);
+        return false;
+    }
+
+    @Override
+    public boolean delete(final Task task) {
+        BasicDBObject dbObject = new BasicDBObject("id", task.getTaskId());
+        mongoDB.getCollection(collectionName).remove(dbObject);
+        return false;
+    }
 }
