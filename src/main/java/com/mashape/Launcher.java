@@ -14,7 +14,7 @@ public final class Launcher {
 
     private static final AppConfig CONFIG = AppConfig.getInstance();
     private static final int PORT = CONFIG.getInt("server.port", 8080);
-    private static final String PACKAGETOSCAN = "com.mashape.service";
+    private static final String PACKAGE = "com.mashape.service";
 
     private Launcher() {
     }
@@ -28,7 +28,7 @@ public final class Launcher {
 
         ServletHolder jerseyServlet = context.addServlet(ServletContainer.class, "/*");
         jerseyServlet.setInitOrder(1);
-        jerseyServlet.setInitParameter("com.sun.jersey.config.property.packages", PACKAGETOSCAN);
+        jerseyServlet.setInitParameter("com.sun.jersey.config.property.packages", PACKAGE);
 
         server.start();
         server.join();
