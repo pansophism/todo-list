@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Created by yxzhao on 10/17/14.
  */
 
-@XmlRootElement(name = "Employees")
+@XmlRootElement(name = "Task")
 public class Task
 {
   @JsonIgnore
