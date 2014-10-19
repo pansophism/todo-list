@@ -1,0 +1,17 @@
+.*
+.class
+.project
+.classpath
+*.iml
+.DS_Store
+.settings
+*.log
+.idea
+results
+override.properties
+bin
+target
+dist
+*.jar
+*.ipr
+*.iws
