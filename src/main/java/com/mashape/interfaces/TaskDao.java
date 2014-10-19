@@ -9,14 +9,16 @@ import java.io.IOException;
  */
 public interface TaskDao {
 
-    Task get(final long id) throws IOException;
+    Iterable<Task> getAll() throws IOException;
 
-    boolean insert(final Task task) throws IOException;
+    Task get(long id) throws IOException;
 
-    boolean update(final Task task);
+    boolean insert(Task task) throws IOException;
 
-    boolean delete(final long id);
+    boolean update(Task task);
 
-    boolean delete(final Task task);
+    boolean delete(long id);
+
+    boolean delete(Task task);
 
 }

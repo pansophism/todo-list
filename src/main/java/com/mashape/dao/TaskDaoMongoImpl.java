@@ -17,13 +17,13 @@ import java.net.UnknownHostException;
  */
 public class TaskDaoMongoImpl implements TaskDao {
 
-    private final DB mongoDB;
+    private final AppConfig config = AppConfig.getInstance();
 
     private static final String COLLECTIONNAME = "task";
     private final ObjectMapper mapper = new ObjectMapper();
-    private final AppConfig config = AppConfig.getInstance();
-
     private final int port = config.getInt("", 27017);
+
+    private final DB mongoDB;
 
     public TaskDaoMongoImpl() throws UnknownHostException {
         MongoClient mongoClient;
@@ -32,33 +32,38 @@ public class TaskDaoMongoImpl implements TaskDao {
     }
 
     @Override
-    public Task get(final long id) throws IOException {
+    public Iterable<Task> getAll() throws IOException {
+        return null;
+    }
+
+    @Override
+    public final Task get(final long id) throws IOException {
         BasicDBObject query = new BasicDBObject("id", id);
         DBObject obj = mongoDB.getCollection(COLLECTIONNAME).findOne(query);
         return mapper.readValue(obj.toString(), Task.class);
     }
 
     @Override
-    public boolean update(final Task task) {
+    public final boolean update(final Task task) {
         return false;
     }
 
     @Override
-    public boolean insert(final Task task) throws IOException {
+    public final boolean insert(final Task task) throws IOException {
         Task oldObj = get(task.getTaskId());
         BasicDBObject dbObject = new BasicDBObject("id", task.getTaskId());
         return false;
     }
 
     @Override
-    public boolean delete(final long id) {
+    public final boolean delete(final long id) {
         BasicDBObject dbObject = new BasicDBObject("id", id);
         mongoDB.getCollection(COLLECTIONNAME).remove(dbObject);
         return false;
     }
 
     @Override
-    public boolean delete(final Task task) {
+    public final boolean delete(final Task task) {
         BasicDBObject dbObject = new BasicDBObject("id", task.getTaskId());
         mongoDB.getCollection(COLLECTIONNAME).remove(dbObject);
         return false;
