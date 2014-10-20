@@ -63,7 +63,7 @@ public class TaskService {
         LOG.info("Trying to update task : " + task);
 
         boolean result = taskDao.update(task);
-        Response.Status status = result ? Response.Status.OK : Response.Status.BAD_REQUEST;
+        Response.Status status = result ? Response.Status.ACCEPTED : Response.Status.BAD_REQUEST;
         return Response.status(status).build();
     }
 
@@ -74,7 +74,7 @@ public class TaskService {
         LOG.info("Trying to insert task : " + task);
 
         taskDao.insert(task);
-        return Response.status(Response.Status.OK).build();
+        return Response.status(Response.Status.CREATED).build();
     }
 
     @DELETE
@@ -83,7 +83,7 @@ public class TaskService {
         LOG.info("Trying to delete task : " + taskID);
 
         taskDao.delete(taskID);
-        return Response.status(Response.Status.OK).build();
+        return Response.status(Response.Status.ACCEPTED).build();
     }
 
 }
