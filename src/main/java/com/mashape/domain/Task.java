@@ -1,6 +1,7 @@
 package com.mashape.domain;
 
 import com.google.common.base.Objects;
+import com.google.common.base.Strings;
 import org.apache.commons.lang.StringUtils;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -23,7 +24,7 @@ public class Task {
     }
 
     public Task(final String taskId, final String title, final String content, final boolean done) {
-        checkArgument(StringUtils.isNotEmpty(taskId), "Task ID must not be empty", taskId);
+        checkArgument(!Strings.isNullOrEmpty(taskId), "Task ID must not be empty", taskId);
         checkNotNull(title, "Task title cannot be null.", title);
 
         this.title = title;

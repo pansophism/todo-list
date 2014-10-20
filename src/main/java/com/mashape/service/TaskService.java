@@ -34,8 +34,10 @@ public class TaskService {
     @Path("/")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public final Response listTasks() throws IOException {
+        LOG.info("listing all tasks.");
         Iterable<Task> tasks = taskDao.getAll();
-        GenericEntity<List<Task>> entity = new GenericEntity<List<Task>>(Lists.newArrayList(tasks)) {};
+        GenericEntity<List<Task>> entity = new GenericEntity<List<Task>>(Lists.newArrayList(tasks)){
+        };
 
         return Response.status(Response.Status.OK).entity(entity).build();
     }
@@ -43,9 +45,11 @@ public class TaskService {
     @GET
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public final Response findTask(@QueryParam("id") String id) throws IOException {
+    public final Response findTask(@PathParam("id") String id) throws IOException {
+        LOG.info("Trying to find task : " + id);
         Task aTask = taskDao.get(id);
-        GenericEntity<Task> entity = new GenericEntity<Task>(aTask) {};
+        GenericEntity<Task> entity = new GenericEntity<Task>(aTask) {
+        };
 
         return Response.status(Response.Status.OK).entity(entity).build();
     }
@@ -54,6 +58,8 @@ public class TaskService {
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public final Response updateTask(Task task) throws IOException, NotUpdatableException {
+        LOG.info("Trying to update task : " + task);
+
         boolean result = taskDao.update(task);
         Response.Status status = result ? Response.Status.OK : Response.Status.BAD_REQUEST;
         return Response.status(status).build();
@@ -63,6 +69,8 @@ public class TaskService {
     @Path("/")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public final Response insertTask(Task task) throws IOException {
+        LOG.info("Trying to insert task : " + task);
+
         taskDao.insert(task);
         return Response.status(Response.Status.OK).build();
     }
@@ -70,7 +78,9 @@ public class TaskService {
     @DELETE
     @Path("/delete/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public final Response insertTask(@PathParam("id") String taskID) throws IOException {
+    public final Response deleteTask(@PathParam("id") String taskID) throws IOException {
+        LOG.info("Trying to delete task : " + taskID);
+
         taskDao.delete(taskID);
         return Response.status(Response.Status.OK).build();
     }

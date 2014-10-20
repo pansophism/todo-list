@@ -1,10 +1,9 @@
 package com.mashape.common;
 
+import com.google.common.base.Strings;
 import com.mashape.domain.Task;
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DBObject;
-import org.apache.commons.lang.BooleanUtils;
-import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
 
 /**
@@ -19,7 +18,7 @@ public class TaskToMongoObjMapper {
                 .append("title", task.getTitle())
                 .append("isDone", task.isDone());
 
-        if (StringUtils.isNotEmpty(task.getTaskId())) {
+        if (!Strings.isNullOrEmpty(task.getTaskId())) {
             builder = builder.append("_id", new ObjectId(String.valueOf(task.getTaskId())));
         }
 

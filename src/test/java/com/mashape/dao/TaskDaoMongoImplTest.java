@@ -44,7 +44,6 @@ public class TaskDaoMongoImplTest {
         this.taskDao = injector.getInstance(TaskDao.class);
     }
 
-    @AfterTest
     public void tearDown() throws Exception {
 
         for(Task aTask : taskDao.getAll()) {
