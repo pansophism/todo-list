@@ -11,7 +11,9 @@ import com.mashape.interfaces.TaskDao;
 import com.mongodb.MongoClient;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
@@ -19,6 +21,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TaskDaoMongoImplTest {
 
     private TaskDao taskDao;
@@ -52,7 +55,6 @@ public class TaskDaoMongoImplTest {
     @Test
     public void testGetAll() throws Exception {
         Iterable<Task> tasks = taskDao.getAll();
-
         assert(tasks != null);
     }
 
@@ -60,9 +62,7 @@ public class TaskDaoMongoImplTest {
     public void testGet() throws Exception {
 
         Task oneTask = getOneRandomExistingTask();
-
         Task fetched = taskDao.get(oneTask.getTaskId());
-
         assertTaskEqual(oneTask, fetched);
      }
 
@@ -89,12 +89,12 @@ public class TaskDaoMongoImplTest {
     }
 
     @Test
-    public void testInsert() throws Exception {
-        Task task = createRandomTask();
-
-        Task result = taskDao.insert(task);
-
-        assertTaskEqual(task, result);
+    public void aTestInsert() throws Exception {
+        for (int i = 0; i < 20; i++) {
+            Task task = createRandomTask();
+            Task result = taskDao.insert(task);
+            assertTaskEqual(task, result);
+        }
 
     }
 
