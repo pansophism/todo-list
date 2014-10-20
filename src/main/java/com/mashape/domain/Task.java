@@ -12,7 +12,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Created by yxzhao on 10/17/14.
  */
 
-@XmlRootElement(name = "Task")
+@XmlRootElement
 public class Task {
     private String taskId;
     private String title;

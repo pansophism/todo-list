@@ -1,5 +1,6 @@
 package com.mashape.interfaces;
 
+import com.mashape.domain.NotUpdatableException;
 import com.mashape.domain.Task;
 
 import java.io.IOException;
@@ -15,7 +16,7 @@ public interface TaskDao {
 
     Task insert(Task task) throws IOException;
 
-    void update(Task task);
+    boolean update(Task task) throws NotUpdatableException;
 
     void delete(String id);
 

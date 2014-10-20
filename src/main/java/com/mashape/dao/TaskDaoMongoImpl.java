@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.mashape.common.TaskToMongoObjMapper;
+import com.mashape.domain.NotUpdatableException;
 import com.mashape.domain.Task;
 import com.mashape.interfaces.TaskDao;
 import com.mongodb.*;
@@ -55,9 +56,16 @@ public class TaskDaoMongoImpl implements TaskDao {
     }
 
     @Override
-    public final void update(final Task task) {
+    public final boolean update(final Task task) throws NotUpdatableException {
         DBObject query = BasicDBObjectBuilder.start().append("_id", new ObjectId(task.getTaskId())).get();
-        this.collection.update(query, mapper.toDBObject(task));
+        WriteResult result = this.collection.update(query, mapper.toDBObject(task));
+        boolean updated = result.isUpdateOfExisting();
+
+        if(!updated) {
+            throw new NotUpdatableException("Task cannot be updated : " + task.toString());
+        }
+
+        return true;
     }
 
     @Override

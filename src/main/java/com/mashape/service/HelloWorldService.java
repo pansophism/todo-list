@@ -20,7 +20,6 @@ public class HelloWorldService {
 
     private static final Logger LOG = LoggerFactory.getLogger(HelloWorldService.class);
 
-
     @GET
     @Path("/task")
     @Produces(MediaType.APPLICATION_JSON)
