@@ -31,20 +31,8 @@
 
         <dependency>
             <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-server</artifactId>
+            <artifactId>jersey-bundle</artifactId>
             <version>${jersey.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-json</artifactId>
-            <version>${jersey.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>stax</groupId>
-                    <artifactId>stax-api</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
@@ -99,12 +87,6 @@
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-xc</artifactId>
             <version>1.7.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-xml</artifactId>
-            <version>2.3.0</version>
         </dependency>
 
         <dependency>
@@ -192,8 +174,8 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <generateUniqueDependencyReducedPom>true</generateUniqueDependencyReducedPom>
-                            <createDependencyReducedPom>true</createDependencyReducedPom>
+                            <generateUniqueDependencyReducedPom>false</generateUniqueDependencyReducedPom>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
                             <shadedArtifactAttached>true</shadedArtifactAttached>
                             <shadedClassifierName>executable</shadedClassifierName>
                             <transformers>
@@ -222,12 +204,6 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.1.0.v20131115</version>
                 <configuration>
-                    <systemProperties>
-                        <systemProperty>
-                            <name>log4j.configuration</name>
-                            <value>log4j.xml</value>
-                        </systemProperty>
-                    </systemProperties>
                     <scanIntervalSeconds>1</scanIntervalSeconds>
                     <reload>automatic</reload>
                 </configuration>
