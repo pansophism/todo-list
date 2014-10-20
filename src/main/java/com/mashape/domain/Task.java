@@ -1,6 +1,7 @@
 package com.mashape.domain;
 
 import com.google.common.base.Objects;
+import org.apache.commons.lang.StringUtils;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -13,7 +14,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 @XmlRootElement(name = "Task")
 public class Task {
-    private long taskId;
+    private String taskId;
     private String title;
     private String content;
     private boolean done;
@@ -21,9 +22,9 @@ public class Task {
     public Task() {
     }
 
-    public Task(final String title, final String content, final boolean done, final long taskId) {
+    public Task(final String taskId, final String title, final String content, final boolean done) {
+        checkArgument(StringUtils.isNotEmpty(taskId), "Task ID must not be empty", taskId);
         checkNotNull(title, "Task title cannot be null.", title);
-        checkArgument(taskId > 0, "Task ID must be greater than 0", taskId);
 
         this.title = title;
         this.content = content;
@@ -31,12 +32,16 @@ public class Task {
         this.taskId = taskId;
     }
 
-    public long getTaskId() {
+    public String getTaskId() {
         return taskId;
     }
 
     public String getTitle() {
         return title;
+    }
+
+    public void setTaskId(final String taskId) {
+        this.taskId = taskId;
     }
 
     public void setTitle(final String title) {

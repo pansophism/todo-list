@@ -1,71 +1,84 @@
 package com.mashape.dao;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mashape.common.AppConfig;
+import com.google.common.collect.Lists;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import com.mashape.common.TaskToMongoObjMapper;
 import com.mashape.domain.Task;
 import com.mashape.interfaces.TaskDao;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBObject;
-import com.mongodb.MongoClient;
+import com.mongodb.*;
+import org.bson.types.ObjectId;
 
 import java.io.IOException;
-import java.net.UnknownHostException;
+import javax.annotation.Nonnull;
+import java.util.List;
 
 /**
  * Created by yxzhao on 10/17/14.
  */
+
+@Singleton
 public class TaskDaoMongoImpl implements TaskDao {
 
-    private final AppConfig config = AppConfig.getInstance();
+    private final DBCollection collection;
+    private final TaskToMongoObjMapper mapper;
 
-    private static final String COLLECTIONNAME = "task";
-    private final ObjectMapper mapper = new ObjectMapper();
-    private final int port = config.getInt("", 27017);
-
-    private final DB mongoDB;
-
-    public TaskDaoMongoImpl() throws UnknownHostException {
-        MongoClient mongoClient;
-        mongoClient = new MongoClient("localhost", port);
-        mongoDB = mongoClient.getDB("task");
+    @Inject
+    public TaskDaoMongoImpl(MongoClient mongo, TaskToMongoObjMapper mapper) {
+        this.collection = mongo.getDB("todo-list").getCollection("task");
+        this.mapper = mapper;
     }
 
     @Override
-    public Iterable<Task> getAll() throws IOException {
-        return null;
+    public @Nonnull Iterable<Task> getAll() throws IOException {
+        List<Task> data = Lists.newArrayList();
+        DBCursor cursor = collection.find();
+        while (cursor.hasNext()) {
+            DBObject doc = cursor.next();
+            Task aTask = mapper.toTask(doc);
+            data.add(aTask);
+        }
+
+        return data;
     }
 
     @Override
-    public final Task get(final long id) throws IOException {
-        BasicDBObject query = new BasicDBObject("id", id);
-        DBObject obj = mongoDB.getCollection(COLLECTIONNAME).findOne(query);
-        return mapper.readValue(obj.toString(), Task.class);
+    public final Task get(final String id) throws IOException {
+        DBObject query = BasicDBObjectBuilder.start().append("_id", new ObjectId(id)).get();
+        DBObject data = this.collection.findOne(query);
+
+        if(data == null) {
+            return null;
+        }
+
+        return mapper.toTask(data);
     }
 
     @Override
-    public final boolean update(final Task task) {
-        return false;
+    public final void update(final Task task) {
+        DBObject query = BasicDBObjectBuilder.start().append("_id", new ObjectId(task.getTaskId())).get();
+        this.collection.update(query, mapper.toDBObject(task));
     }
 
     @Override
-    public final boolean insert(final Task task) throws IOException {
-        Task oldObj = get(task.getTaskId());
-        BasicDBObject dbObject = new BasicDBObject("id", task.getTaskId());
-        return false;
+    public final Task insert(final Task task) throws IOException {
+
+        DBObject doc = mapper.toDBObject(task);
+        this.collection.insert(doc);
+        ObjectId id = (ObjectId) doc.get("_id");
+        task.setTaskId(id.toString());
+
+        return task;
     }
 
     @Override
-    public final boolean delete(final long id) {
-        BasicDBObject dbObject = new BasicDBObject("id", id);
-        mongoDB.getCollection(COLLECTIONNAME).remove(dbObject);
-        return false;
+    public final void delete(final String id) {
+        DBObject query = BasicDBObjectBuilder.start().append("_id", new ObjectId(id)).get();
+        this.collection.remove(query);
     }
 
     @Override
-    public final boolean delete(final Task task) {
-        BasicDBObject dbObject = new BasicDBObject("id", task.getTaskId());
-        mongoDB.getCollection(COLLECTIONNAME).remove(dbObject);
-        return false;
+    public final void delete(final Task task) {
+        delete(task.getTaskId());
     }
 }

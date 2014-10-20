@@ -11,14 +11,14 @@ public interface TaskDao {
 
     Iterable<Task> getAll() throws IOException;
 
-    Task get(long id) throws IOException;
+    Task get(String id) throws IOException;
 
-    boolean insert(Task task) throws IOException;
+    Task insert(Task task) throws IOException;
 
-    boolean update(Task task);
+    void update(Task task);
 
-    boolean delete(long id);
+    void delete(String id);
 
-    boolean delete(Task task);
+    void delete(Task task);
 
 }
