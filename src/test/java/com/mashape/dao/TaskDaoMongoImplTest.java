@@ -7,6 +7,7 @@ import com.google.inject.Injector;
 import com.google.inject.Provides;
 import com.mashape.common.TaskToMongoObjMapper;
 import com.mashape.domain.Task;
+import com.mashape.exception.TaskNotFoundException;
 import com.mashape.interfaces.TaskDao;
 import com.mongodb.MongoClient;
 import org.testng.annotations.BeforeTest;
@@ -99,7 +100,7 @@ public class TaskDaoMongoImplTest {
 
     }
 
-    @Test(priority = 5)
+    @Test(priority = 5, expectedExceptions = TaskNotFoundException.class)
     public void testDelete() throws Exception {
         Task task = getOneRandomExistingTask();
         taskDao.delete(task);
