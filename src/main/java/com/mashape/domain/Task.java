@@ -2,7 +2,6 @@ package com.mashape.domain;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Strings;
-import org.apache.commons.lang.StringUtils;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

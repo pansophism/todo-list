@@ -9,7 +9,6 @@ import com.mashape.common.TaskToMongoObjMapper;
 import com.mashape.domain.Task;
 import com.mashape.interfaces.TaskDao;
 import com.mongodb.MongoClient;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -27,11 +26,13 @@ public class TaskDaoMongoImplTest {
     public void setUp() throws Exception {
         Injector injector = Guice.createInjector(new AbstractModule() {
 
-            @Provides TaskToMongoObjMapper providesMapper() {
+            @Provides
+            TaskToMongoObjMapper providesMapper() {
                 return new TaskToMongoObjMapper();
             }
 
-            @Provides MongoClient provideMongoClient() throws UnknownHostException {
+            @Provides
+            MongoClient provideMongoClient() throws UnknownHostException {
                 return new MongoClient("localhost");
             }
 
@@ -46,7 +47,7 @@ public class TaskDaoMongoImplTest {
 
     public void tearDown() throws Exception {
 
-        for(Task aTask : taskDao.getAll()) {
+        for (Task aTask : taskDao.getAll()) {
             taskDao.delete(aTask);
         }
 
@@ -65,7 +66,7 @@ public class TaskDaoMongoImplTest {
     @Test(priority = 2)
     public void testGetAll() throws Exception {
         Iterable<Task> tasks = taskDao.getAll();
-        assert(tasks != null);
+        assert (tasks != null);
     }
 
     @Test(priority = 3)
@@ -74,7 +75,7 @@ public class TaskDaoMongoImplTest {
         Task oneTask = getOneRandomExistingTask();
         Task fetched = taskDao.get(oneTask.getTaskId());
         assertTaskEqual(oneTask, fetched);
-     }
+    }
 
     @Test(priority = 4)
     public void testUpdate() throws Exception {
@@ -103,12 +104,12 @@ public class TaskDaoMongoImplTest {
         Task task = getOneRandomExistingTask();
         taskDao.delete(task);
 
-        assert(taskDao.get(task.getTaskId()) == null);
+        assert (taskDao.get(task.getTaskId()) == null);
     }
 
     private Task getOneRandomExistingTask() throws IOException {
         Iterable<Task> tasks = taskDao.getAll();
-        assert(tasks != null);
+        assert (tasks != null);
 
         List<Task> taskList = Lists.newArrayList(tasks);
         Task oneTask = taskList.get((int) (taskList.size() * Math.random()));

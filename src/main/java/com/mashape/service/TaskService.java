@@ -36,7 +36,7 @@ public class TaskService {
     public final Response listTasks() throws IOException {
         LOG.info("listing all tasks.");
         Iterable<Task> tasks = taskDao.getAll();
-        GenericEntity<List<Task>> entity = new GenericEntity<List<Task>>(Lists.newArrayList(tasks)){
+        GenericEntity<List<Task>> entity = new GenericEntity<List<Task>>(Lists.newArrayList(tasks)) {
         };
 
         return Response.status(Response.Status.OK).entity(entity).build();

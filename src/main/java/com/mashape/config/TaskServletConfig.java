@@ -4,7 +4,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Provides;
 import com.google.inject.servlet.GuiceServletContextListener;
-import com.google.inject.servlet.ServletModule;
 import com.mashape.common.TaskToMongoObjMapper;
 import com.mashape.dao.TaskDaoMongoImpl;
 import com.mashape.interfaces.TaskDao;
@@ -24,7 +23,7 @@ public class TaskServletConfig extends GuiceServletContextListener {
 
     @Override
     protected Injector getInjector() {
-        final ResourceConfig rc = new PackagesResourceConfig( "com.mashape.service" );
+        final ResourceConfig rc = new PackagesResourceConfig("com.mashape.service");
         return Guice.createInjector(new JerseyServletModule() {
 
             @Provides
@@ -43,7 +42,7 @@ public class TaskServletConfig extends GuiceServletContextListener {
 
                 bind(TaskDao.class).to(TaskDaoMongoImpl.class).in(Singleton.class);
 
-                for (Class<?> resource : rc.getClasses() ) {
+                for (Class<?> resource : rc.getClasses()) {
                     bind(resource);
                 }
 

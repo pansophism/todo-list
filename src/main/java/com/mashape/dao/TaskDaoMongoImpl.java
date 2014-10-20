@@ -10,8 +10,8 @@ import com.mashape.interfaces.TaskDao;
 import com.mongodb.*;
 import org.bson.types.ObjectId;
 
-import java.io.IOException;
 import javax.annotation.Nonnull;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -31,7 +31,9 @@ public class TaskDaoMongoImpl implements TaskDao {
     }
 
     @Override
-    public @Nonnull Iterable<Task> getAll() throws IOException {
+    public
+    @Nonnull
+    Iterable<Task> getAll() throws IOException {
         List<Task> data = Lists.newArrayList();
         DBCursor cursor = collection.find();
         while (cursor.hasNext()) {
@@ -48,7 +50,7 @@ public class TaskDaoMongoImpl implements TaskDao {
         DBObject query = BasicDBObjectBuilder.start().append("_id", new ObjectId(id)).get();
         DBObject data = this.collection.findOne(query);
 
-        if(data == null) {
+        if (data == null) {
             return null;
         }
 
@@ -61,7 +63,7 @@ public class TaskDaoMongoImpl implements TaskDao {
         WriteResult result = this.collection.update(query, mapper.toDBObject(task));
         boolean updated = result.isUpdateOfExisting();
 
-        if(!updated) {
+        if (!updated) {
             throw new NotUpdatableException("Task cannot be updated : " + task.toString());
         }
 

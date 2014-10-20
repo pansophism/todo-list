@@ -1,18 +1,11 @@
 package com.mashape;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceFilter;
 import com.mashape.config.AppConfig;
 import com.mashape.config.TaskServletConfig;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.DefaultServlet;
-import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
-
-import javax.servlet.DispatcherType;
-import java.util.EnumSet;
 
 /**
  * Created by yxzhao on 10/17/14.
