@@ -6,6 +6,7 @@ import com.google.inject.Singleton;
 import com.mashape.common.TaskToMongoObjMapper;
 import com.mashape.domain.Task;
 import com.mashape.exception.NotUpdatableException;
+import com.mashape.exception.TaskNotFoundException;
 import com.mashape.interfaces.TaskDao;
 import com.mongodb.*;
 import org.bson.types.ObjectId;
@@ -46,12 +47,12 @@ public class TaskDaoMongoImpl implements TaskDao {
     }
 
     @Override
-    public final Task get(final String id) throws IOException {
+    public final Task get(final String id) throws IOException, TaskNotFoundException {
         DBObject query = BasicDBObjectBuilder.start().append("_id", new ObjectId(id)).get();
         DBObject data = this.collection.findOne(query);
 
-        if (data == null) {
-            return null;
+        if(data == null) {
+            throw new TaskNotFoundException("No task can be retrieved using the id you offered: : " + id);
         }
 
         return mapper.toTask(data);
@@ -82,13 +83,15 @@ public class TaskDaoMongoImpl implements TaskDao {
     }
 
     @Override
-    public final void delete(final String id) {
+    public final void delete(final String id) throws IOException, TaskNotFoundException {
+        get(id);
+
         DBObject query = BasicDBObjectBuilder.start().append("_id", new ObjectId(id)).get();
         this.collection.remove(query);
     }
 
     @Override
-    public final void delete(final Task task) {
+    public final void delete(final Task task) throws IOException, TaskNotFoundException {
         delete(task.getTaskId());
     }
 }

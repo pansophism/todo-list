@@ -50,10 +50,6 @@ public class TaskService {
         LOG.info("Trying to find task : " + id);
         Task aTask = taskDao.get(id);
 
-        if (aTask == null) {
-            throw new TaskNotFoundException("No task can be retrieved using the id you offered: : " + id);
-        }
-
         GenericEntity<Task> entity = new GenericEntity<Task>(aTask) {
         };
 
@@ -62,7 +58,7 @@ public class TaskService {
 
     @PUT
     @Path("/{id}")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Consumes(MediaType.APPLICATION_JSON)
     public final Response updateTask(Task task) throws IOException, NotUpdatableException {
         LOG.info("Trying to update task : " + task);
 
@@ -73,7 +69,7 @@ public class TaskService {
 
     @PUT
     @Path("/")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Consumes(MediaType.APPLICATION_JSON)
     public final Response insertTask(Task task) throws IOException {
         LOG.info("Trying to insert task : " + task);
 
@@ -82,9 +78,8 @@ public class TaskService {
     }
 
     @DELETE
-    @Path("/delete/{id}")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public final Response deleteTask(@PathParam("id") String taskID) throws IOException {
+    @Path("/{id}")
+    public final Response deleteTask(@PathParam("id") String taskID) throws IOException, TaskNotFoundException {
         LOG.info("Trying to delete task : " + taskID);
 
         taskDao.delete(taskID);
