@@ -9,24 +9,21 @@ import com.mashape.common.TaskToMongoObjMapper;
 import com.mashape.domain.Task;
 import com.mashape.interfaces.TaskDao;
 import com.mongodb.MongoClient;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.testng.Assert.assertEquals;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TaskDaoMongoImplTest {
 
     private TaskDao taskDao;
 
-    @Before
+    @BeforeTest
     public void setUp() throws Exception {
         Injector injector = Guice.createInjector(new AbstractModule() {
 
@@ -47,18 +44,32 @@ public class TaskDaoMongoImplTest {
         this.taskDao = injector.getInstance(TaskDao.class);
     }
 
-    @After
+    @AfterTest
     public void tearDown() throws Exception {
+
+        for(Task aTask : taskDao.getAll()) {
+            taskDao.delete(aTask);
+        }
+
         taskDao = null;
     }
 
-    @Test
+    @Test(priority = 1)
+    public void aTestInsert() throws Exception {
+        for (int i = 0; i < 20; i++) {
+            Task task = createRandomTask();
+            Task result = taskDao.insert(task);
+            assertTaskEqual(task, result);
+        }
+    }
+
+    @Test(priority = 2)
     public void testGetAll() throws Exception {
         Iterable<Task> tasks = taskDao.getAll();
         assert(tasks != null);
     }
 
-    @Test
+    @Test(priority = 3)
     public void testGet() throws Exception {
 
         Task oneTask = getOneRandomExistingTask();
@@ -66,7 +77,7 @@ public class TaskDaoMongoImplTest {
         assertTaskEqual(oneTask, fetched);
      }
 
-    @Test
+    @Test(priority = 4)
     public void testUpdate() throws Exception {
         Task oldTask = getOneRandomExistingTask();
 
@@ -88,17 +99,7 @@ public class TaskDaoMongoImplTest {
 
     }
 
-    @Test
-    public void aTestInsert() throws Exception {
-        for (int i = 0; i < 20; i++) {
-            Task task = createRandomTask();
-            Task result = taskDao.insert(task);
-            assertTaskEqual(task, result);
-        }
-
-    }
-
-    @Test
+    @Test(priority = 5)
     public void testDelete() throws Exception {
         Task task = getOneRandomExistingTask();
         taskDao.delete(task);
@@ -120,7 +121,7 @@ public class TaskDaoMongoImplTest {
         Task task = new Task();
         task.setTitle("Task title" + Math.random());
         task.setContent("Task content." + Math.random());
-        task.setDone(false);
+        task.setDone(Math.random() > 0.5);
 
         return task;
     }
