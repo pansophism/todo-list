@@ -3,6 +3,7 @@ package com.mashape.service;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.mashape.domain.Task;
+import com.mashape.exception.CannotInsertException;
 import com.mashape.exception.NotUpdatableException;
 import com.mashape.exception.TaskNotFoundException;
 import com.mashape.interfaces.TaskDao;
@@ -13,7 +14,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -23,7 +23,7 @@ import java.util.List;
 @Path("/tasks")
 public class TaskService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(HelloWorldService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TaskService.class);
     private final TaskDao taskDao;
 
     @Inject
@@ -34,7 +34,7 @@ public class TaskService {
     @GET
     @Path("/")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public final Response listTasks() throws IOException {
+    public final Response listTasks() {
         LOG.info("listing all tasks.");
         Iterable<Task> tasks = taskDao.getAll();
         GenericEntity<List<Task>> entity = new GenericEntity<List<Task>>(Lists.newArrayList(tasks)) {
@@ -46,7 +46,7 @@ public class TaskService {
     @GET
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public final Response findTask(@PathParam("id") String id) throws IOException, TaskNotFoundException {
+    public final Response findTask(@PathParam("id") String id) throws TaskNotFoundException {
         LOG.info("Trying to find task : " + id);
         Task aTask = taskDao.get(id);
 
@@ -59,7 +59,7 @@ public class TaskService {
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public final Response updateTask(Task task) throws IOException, NotUpdatableException {
+    public final Response updateTask(Task task) throws NotUpdatableException {
         LOG.info("Trying to update task : " + task);
 
         boolean result = taskDao.update(task);
@@ -70,7 +70,7 @@ public class TaskService {
     @POST
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
-    public final Response insertTask(Task task) throws IOException {
+    public final Response insertTask(Task task) throws CannotInsertException {
         LOG.info("Trying to insert task : " + task);
 
         return Response.status(Response.Status.CREATED).entity(taskDao.insert(task)).build();
@@ -78,7 +78,7 @@ public class TaskService {
 
     @DELETE
     @Path("/{id}")
-    public final Response deleteTask(@PathParam("id") String taskID) throws IOException, TaskNotFoundException {
+    public final Response deleteTask(@PathParam("id") String taskID) throws TaskNotFoundException {
         LOG.info("Trying to delete task : " + taskID);
 
         taskDao.delete(taskID);

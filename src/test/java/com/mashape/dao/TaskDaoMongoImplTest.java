@@ -103,9 +103,11 @@ public class TaskDaoMongoImplTest {
     @Test(priority = 5, expectedExceptions = TaskNotFoundException.class)
     public void testDelete() throws Exception {
         Task task = getOneRandomExistingTask();
+        String taskId = task.getTaskId();
         taskDao.delete(task);
 
-        assert (taskDao.get(task.getTaskId()) == null);
+
+        taskDao.get(taskId);
     }
 
     private Task getOneRandomExistingTask() throws IOException {

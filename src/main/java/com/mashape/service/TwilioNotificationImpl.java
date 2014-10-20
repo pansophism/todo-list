@@ -1,5 +1,7 @@
 package com.mashape.service;
 
+import com.google.inject.Inject;
+import com.mashape.config.AppConfig;
 import com.mashape.interfaces.NotificationService;
 import com.twilio.sdk.TwilioRestClient;
 import com.twilio.sdk.TwilioRestException;
@@ -19,29 +21,27 @@ import java.util.List;
 public class TwilioNotificationImpl implements NotificationService {
 
     private static final Logger LOG = LoggerFactory.getLogger(TwilioNotificationImpl.class);
+    private final TwilioRestClient client;
+    private static final String fromNumber
+            = AppConfig.getInstance().getString("from.number", "+14157262618");
 
-    // Find your Account Sid and Token at twilio.com/user/account
-    public static final String ACCOUNT_SID = "AC58b1c7c8115823b20bf841ac3702b9d1";
-    public static final String AUTH_TOKEN = "{{ auth_token }}";
-
-    public static void main(final String[] args) throws TwilioRestException {
-        TwilioRestClient client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
-
-        // Build a filter for the MessageList
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("Body", "Jenny please?! I love you <3"));
-        params.add(new BasicNameValuePair("To", "+15558675309"));
-        params.add(new BasicNameValuePair("From", "+14158141829"));
-        params.add(new BasicNameValuePair("MediaUrl", "http://www.example.com/hearts.png"));
-
-
-        MessageFactory messageFactory = client.getAccount().getMessageFactory();
-        Message message = messageFactory.create(params);
-        LOG.info(message.getSid());
+    @Inject
+    public TwilioNotificationImpl(TwilioRestClient client) {
+        this.client = client;
     }
 
     @Override
-    public void notify(final com.mashape.domain.Message msg) {
+    public void notify(final com.mashape.domain.Message msg) throws TwilioRestException {
 
+        MessageFactory messageFactory = client.getAccount().getMessageFactory();
+
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("From", fromNumber));
+        params.add(new BasicNameValuePair("To", msg.getTo()));
+        params.add(new BasicNameValuePair("Body", msg.getBody()));
+
+        Message message = messageFactory.create(params);
+
+        LOG.info("Message sent to : " + message.getTo());
     }
 }

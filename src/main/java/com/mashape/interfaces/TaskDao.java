@@ -1,6 +1,7 @@
 package com.mashape.interfaces;
 
 import com.mashape.domain.Task;
+import com.mashape.exception.CannotInsertException;
 import com.mashape.exception.NotUpdatableException;
 import com.mashape.exception.TaskNotFoundException;
 
@@ -11,16 +12,16 @@ import java.io.IOException;
  */
 public interface TaskDao {
 
-    Iterable<Task> getAll() throws IOException;
+    Iterable<Task> getAll();
 
-    Task get(String id) throws IOException, TaskNotFoundException;
+    Task get(String id) throws TaskNotFoundException;
 
-    Task insert(Task task) throws IOException;
+    Task insert(Task task) throws CannotInsertException;
 
     boolean update(Task task) throws NotUpdatableException;
 
-    void delete(String id) throws IOException, TaskNotFoundException;
+    void delete(String id) throws TaskNotFoundException;
 
-    void delete(Task task) throws IOException, TaskNotFoundException;
+    void delete(Task task) throws TaskNotFoundException;
 
 }
