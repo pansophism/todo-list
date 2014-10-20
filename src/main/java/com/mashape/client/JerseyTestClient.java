@@ -13,9 +13,9 @@ public class JerseyTestClient {
 
             Client client = Client.create();
 
-            WebResource webResource = client.resource("http://localhost:8888/tasks/");
+            WebResource webResource = client.resource("http://localhost:8888/tasks/5444c5593004c68635cf0055");
 
-            String input = "{\"content\":\"NO CONTENT.0.2079524875003187\",\"done\":\"false\",\"taskId\":\"\",\"title\":\"Task title0.19796036818903973\"}";
+            String input = "{\"content\":\"HAD CONTENT.0.2079524875003187\",\"done\":\"false\",\"taskId\":\"5444c5593004c68635cf0055\",\"title\":\"Task title0.19796036818903973\"}";
 
             ClientResponse response = webResource.type("application/json").put(ClientResponse.class, input);
 

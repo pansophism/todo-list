@@ -67,14 +67,13 @@ public class TaskService {
         return Response.status(status).build();
     }
 
-    @PUT
+    @POST
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     public final Response insertTask(Task task) throws IOException {
         LOG.info("Trying to insert task : " + task);
 
-        taskDao.insert(task);
-        return Response.status(Response.Status.CREATED).build();
+        return Response.status(Response.Status.CREATED).entity(taskDao.insert(task)).build();
     }
 
     @DELETE
