@@ -2,8 +2,9 @@ package com.mashape.service;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
-import com.mashape.domain.NotUpdatableException;
 import com.mashape.domain.Task;
+import com.mashape.exception.NotUpdatableException;
+import com.mashape.exception.TaskNotFoundException;
 import com.mashape.interfaces.TaskDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,9 +46,14 @@ public class TaskService {
     @GET
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public final Response findTask(@PathParam("id") String id) throws IOException {
+    public final Response findTask(@PathParam("id") String id) throws IOException, TaskNotFoundException {
         LOG.info("Trying to find task : " + id);
         Task aTask = taskDao.get(id);
+
+        if (aTask == null) {
+            throw new TaskNotFoundException("No task can be retrieved using the id you offered: : " + id);
+        }
+
         GenericEntity<Task> entity = new GenericEntity<Task>(aTask) {
         };
 

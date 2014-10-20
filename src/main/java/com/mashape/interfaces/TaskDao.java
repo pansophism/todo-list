@@ -1,7 +1,7 @@
 package com.mashape.interfaces;
 
-import com.mashape.domain.NotUpdatableException;
 import com.mashape.domain.Task;
+import com.mashape.exception.NotUpdatableException;
 
 import java.io.IOException;
 

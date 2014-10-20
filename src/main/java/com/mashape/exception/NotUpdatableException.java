@@ -1,4 +1,4 @@
-package com.mashape.domain;
+package com.mashape.exception;
 
 /**
  * Created by yxzhao on 10/19/14.
