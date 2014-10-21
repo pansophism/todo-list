@@ -26,8 +26,8 @@ public class TaskDaoMongoImpl implements TaskDao {
 
     private static final Logger LOG = LoggerFactory.getLogger(TaskDaoMongoImpl.class);
 
-    private final DBCollection collection;
-    private final TaskToMongoObjMapper mapper;
+    protected DBCollection collection;
+    protected TaskToMongoObjMapper mapper;
 
     @Inject
     public TaskDaoMongoImpl(MongoClient mongo, TaskToMongoObjMapper mapper) {
@@ -72,16 +72,16 @@ public class TaskDaoMongoImpl implements TaskDao {
     }
 
     @Override
-    public boolean update(final Task task) throws NotUpdatableException {
+    public boolean update(final Task task) throws Exception {
 
-        if(task == null || task.getTaskId() == null) {
+        if(task == null || task.getId() == null) {
             throw new NotUpdatableException("Task cannot be updated : " + task.toString());
         }
 
         try {
-            get(task.getTaskId());
+            get(task.getId());
 
-            DBObject query = BasicDBObjectBuilder.start().append("_id", new ObjectId(task.getTaskId())).get();
+            DBObject query = BasicDBObjectBuilder.start().append("_id", new ObjectId(task.getId())).get();
             WriteResult result = this.collection.update(query, mapper.toDBObject(task));
             result.isUpdateOfExisting();
         } catch (Exception e) {
@@ -93,13 +93,13 @@ public class TaskDaoMongoImpl implements TaskDao {
     }
 
     @Override
-    public final Task insert(final Task task) throws CannotInsertException {
+    public Task insert(final Task task) throws Exception {
 
         try {
             DBObject doc = mapper.toDBObject(task);
             this.collection.insert(doc);
             ObjectId id = (ObjectId) doc.get("_id");
-            task.setTaskId(id.toString());
+            task.setId(id.toString());
         } catch (Exception e) {
             LOG.error("Exception while inserting task : " + task, e);
 
@@ -110,19 +110,11 @@ public class TaskDaoMongoImpl implements TaskDao {
     }
 
     @Override
-    public final void delete(final String id) throws TaskNotFoundException {
+    public void delete(final String id) throws Exception {
         get(id);
 
         DBObject query = BasicDBObjectBuilder.start().append("_id", new ObjectId(id)).get();
         this.collection.remove(query);
     }
 
-    @Override
-    public final void delete(final Task task) throws TaskNotFoundException {
-        if(task == null || task.getTaskId() == null) {
-           throw new TaskNotFoundException("No such task : " + task);
-        }
-        get(task.getTaskId());
-        delete(task.getTaskId());
-    }
 }

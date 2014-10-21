@@ -49,7 +49,7 @@ public class TaskDaoMongoImplTest {
     public void tearDown() throws Exception {
 
         for (Task aTask : taskDao.getAll()) {
-            taskDao.delete(aTask);
+            taskDao.delete(aTask.getId());
         }
 
         taskDao = null;
@@ -74,7 +74,7 @@ public class TaskDaoMongoImplTest {
     public void testGet() throws Exception {
 
         Task oneTask = getOneRandomExistingTask();
-        Task fetched = taskDao.get(oneTask.getTaskId());
+        Task fetched = taskDao.get(oneTask.getId());
         assertTaskEqual(oneTask, fetched);
     }
 
@@ -92,7 +92,7 @@ public class TaskDaoMongoImplTest {
 
         taskDao.update(oldTask);
 
-        Task newTask = taskDao.get(oldTask.getTaskId());
+        Task newTask = taskDao.get(oldTask.getId());
 
         assertEquals(newTitle, newTask.getTitle());
         assertEquals(newContent, newTask.getContent());
@@ -103,8 +103,8 @@ public class TaskDaoMongoImplTest {
     @Test(priority = 5, expectedExceptions = TaskNotFoundException.class)
     public void testDelete() throws Exception {
         Task task = getOneRandomExistingTask();
-        String taskId = task.getTaskId();
-        taskDao.delete(task);
+        String taskId = task.getId();
+        taskDao.delete(task.getId());
 
 
         taskDao.get(taskId);

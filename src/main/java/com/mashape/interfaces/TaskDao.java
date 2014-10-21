@@ -16,12 +16,10 @@ public interface TaskDao {
 
     Task get(String id) throws TaskNotFoundException;
 
-    Task insert(Task task) throws CannotInsertException;
+    Task insert(Task task) throws Exception;
 
-    boolean update(Task task) throws NotUpdatableException;
+    boolean update(Task task) throws Exception;
 
-    void delete(String id) throws TaskNotFoundException;
-
-    void delete(Task task) throws TaskNotFoundException;
+    void delete(String id) throws Exception;
 
 }

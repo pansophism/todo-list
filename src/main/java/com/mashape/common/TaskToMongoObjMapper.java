@@ -4,7 +4,6 @@ import com.google.common.base.Strings;
 import com.mashape.domain.Task;
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DBObject;
-import com.sun.xml.bind.v2.runtime.reflect.opt.Const;
 import org.bson.types.ObjectId;
 
 /**
@@ -21,8 +20,8 @@ public class TaskToMongoObjMapper {
                 .append(Constants.Fileds.TITLE.value(), task.getTitle())
                 .append(Constants.Fileds.DONE.value(), task.isDone());
 
-        if (!Strings.isNullOrEmpty(task.getTaskId())) {
-            builder = builder.append(IDKEY, new ObjectId(String.valueOf(task.getTaskId())));
+        if (!Strings.isNullOrEmpty(task.getId())) {
+            builder = builder.append(IDKEY, new ObjectId(String.valueOf(task.getId())));
         }
 
         return builder.get();

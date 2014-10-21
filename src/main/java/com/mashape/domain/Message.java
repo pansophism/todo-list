@@ -12,7 +12,7 @@ public class Message {
     public Message(final String to, final String body) {
 
         checkNotNull(to, "Has to specify destination of a message", to);
-        checkNotNull(body, "Message boday cannot be null", body);
+        checkNotNull(body, "Message body cannot be null", body);
 
         this.to = to;
         this.body = body;

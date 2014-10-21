@@ -59,7 +59,7 @@ public class TaskService {
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public final Response updateTask(Task task) throws NotUpdatableException {
+    public final Response updateTask(Task task) throws Exception {
         LOG.info("Trying to update task : " + task);
 
         boolean result = taskDao.update(task);
@@ -70,7 +70,7 @@ public class TaskService {
     @POST
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
-    public final Response insertTask(Task task) throws CannotInsertException {
+    public final Response insertTask(Task task) throws Exception {
         LOG.info("Trying to insert task : " + task);
 
         return Response.status(Response.Status.CREATED).entity(taskDao.insert(task)).build();
@@ -78,7 +78,7 @@ public class TaskService {
 
     @DELETE
     @Path("/{id}")
-    public final Response deleteTask(@PathParam("id") String taskID) throws TaskNotFoundException {
+    public final Response deleteTask(@PathParam("id") String taskID) throws Exception {
         LOG.info("Trying to delete task : " + taskID);
 
         taskDao.delete(taskID);

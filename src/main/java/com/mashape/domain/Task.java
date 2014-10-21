@@ -2,6 +2,7 @@ package com.mashape.domain;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Strings;
+import com.mashape.common.Constants;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -14,7 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 @XmlRootElement
 public class Task {
-    private String taskId;
+    private String id;
     private String title;
     private String content;
     private boolean done;
@@ -29,19 +30,19 @@ public class Task {
         this.title = title;
         this.content = content;
         this.done = done;
-        this.taskId = taskId;
+        this.id = taskId;
     }
 
-    public String getTaskId() {
-        return taskId;
+    public String getId() {
+        return id;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTaskId(final String taskId) {
-        this.taskId = taskId;
+    public void setId(final String taskId) {
+        this.id = taskId;
     }
 
     public void setTitle(final String title) {
@@ -67,16 +68,16 @@ public class Task {
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
-                .add("TaskID", getTaskId())
-                .add("Title", getTitle())
-                .add("Content", getContent())
-                .add("isDone", isDone())
+                .add(Constants.Fileds.ID.value(), getId())
+                .add(Constants.Fileds.TITLE.value(), getTitle())
+                .add(Constants.Fileds.CONTENT.value(), getContent())
+                .add(Constants.Fileds.DONE.value(), isDone())
                 .toString();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getTaskId(), getContent(), getTitle());
+        return Objects.hashCode(getId(), getContent(), getTitle());
     }
 
     @Override
@@ -91,7 +92,7 @@ public class Task {
 
         Task otherTask = (Task) other;
 
-        return Objects.equal(getTaskId(), otherTask.getTaskId())
+        return Objects.equal(getId(), otherTask.getId())
                 && Objects.equal(getTitle(), otherTask.getTitle())
                 && Objects.equal(getContent(), otherTask.getContent())
                 && Objects.equal(isDone(), otherTask.isDone());
