@@ -10,6 +10,7 @@ import com.mashape.domain.Task;
 import com.mashape.exception.TaskNotFoundException;
 import com.mashape.interfaces.TaskDao;
 import com.mongodb.MongoClient;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -46,6 +47,7 @@ public class TaskDaoMongoImplTest {
         this.taskDao = injector.getInstance(TaskDao.class);
     }
 
+    @AfterTest
     public void tearDown() throws Exception {
 
         for (Task aTask : taskDao.getAll()) {
