@@ -1,4 +1,4 @@
-package com.mashape.config;
+package com.mashape.module;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -11,6 +11,10 @@ public class TaskServletConfig extends GuiceServletContextListener {
 
     @Override
     protected Injector getInjector() {
-        return Guice.createInjector(new ToDoListAppModule());
+        return Guice.createInjector(
+                new ToDoListAppModule(),
+                new TaskModule(),
+                new SearchModule(),
+                new NotificationModule());
     }
 }

@@ -1,8 +1,8 @@
 package com.mashape.dao;
 
 import com.google.inject.Inject;
+import com.mashape.common.AppConfig;
 import com.mashape.common.TaskToMongoObjMapper;
-import com.mashape.config.AppConfig;
 import com.mashape.domain.Message;
 import com.mashape.domain.Task;
 import com.mashape.exception.NotUpdatableException;

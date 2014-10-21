@@ -1,4 +1,4 @@
-package com.mashape.config;
+package com.mashape.common;
 
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.ConfigurationException;

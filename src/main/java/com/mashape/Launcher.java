@@ -1,8 +1,8 @@
 package com.mashape;
 
 import com.google.inject.servlet.GuiceFilter;
-import com.mashape.config.AppConfig;
-import com.mashape.config.TaskServletConfig;
+import com.mashape.common.AppConfig;
+import com.mashape.module.TaskServletConfig;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;

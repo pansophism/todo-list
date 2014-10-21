@@ -1,7 +1,7 @@
 package com.mashape.service;
 
 import com.google.inject.Inject;
-import com.mashape.config.AppConfig;
+import com.mashape.common.AppConfig;
 import com.mashape.interfaces.NotificationService;
 import com.twilio.sdk.TwilioRestClient;
 import com.twilio.sdk.TwilioRestException;
@@ -21,9 +21,9 @@ import java.util.List;
 public class TwilioNotificationImpl implements NotificationService {
 
     private static final Logger LOG = LoggerFactory.getLogger(TwilioNotificationImpl.class);
+    private static final String FROM_NUMBER = AppConfig.getInstance().getString("from.number");
+
     private final TwilioRestClient client;
-    private static final String fromNumber
-            = AppConfig.getInstance().getString("from.number", "+14157262618");
 
     @Inject
     public TwilioNotificationImpl(TwilioRestClient client) {
@@ -36,7 +36,7 @@ public class TwilioNotificationImpl implements NotificationService {
         MessageFactory messageFactory = client.getAccount().getMessageFactory();
 
         List<NameValuePair> params = new ArrayList<>();
-        params.add(new BasicNameValuePair("From", fromNumber));
+        params.add(new BasicNameValuePair("From", FROM_NUMBER));
         params.add(new BasicNameValuePair("To", msg.getTo()));
         params.add(new BasicNameValuePair("Body", msg.getBody()));
 
