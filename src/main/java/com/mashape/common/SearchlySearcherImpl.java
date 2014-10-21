@@ -58,9 +58,8 @@ public class SearchlySearcherImpl extends SearchlyBase implements Searcher {
         List<SearchResult.Hit<Task, Void>> hits = ((SearchResult) result).getHits(Task.class);
 
         return Lists.transform(hits, new Function<SearchResult.Hit<Task, Void>, Task>() {
-            @Nullable
             @Override
-            public Task apply(@Nullable SearchResult.Hit<Task, Void> aHit) {
+            public Task apply(SearchResult.Hit<Task, Void> aHit) {
                 return aHit.source;
             }
         });

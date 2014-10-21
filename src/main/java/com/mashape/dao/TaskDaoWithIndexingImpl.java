@@ -51,7 +51,7 @@ public class TaskDaoWithIndexingImpl extends TaskDaoMongoImpl {
     public boolean update(Task task) throws Exception {
 
         if (task == null || task.getId() == null) {
-            throw new NotUpdatableException("Task cannot be updated : " + task.toString());
+            throw new NotUpdatableException("Task cannot be updated : " + task);
         }
 
         try {
