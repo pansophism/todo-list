@@ -1,5 +1,6 @@
 package com.mashape.dao;
 
+import com.google.common.base.Strings;
 import com.google.inject.Inject;
 import com.mashape.common.AppConfig;
 import com.mashape.common.TaskToMongoObjMapper;
@@ -50,7 +51,7 @@ public class TaskDaoWithIndexingImpl extends TaskDaoMongoImpl {
     @Override
     public final boolean update(final Task task) throws Exception {
 
-        if (task == null || task.getId() == null) {
+        if (task == null || Strings.isNullOrEmpty(task.getId())) {
             throw new NotUpdatableException("Task cannot be updated : " + task);
         }
 

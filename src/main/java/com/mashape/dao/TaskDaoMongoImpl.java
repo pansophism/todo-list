@@ -1,5 +1,6 @@
 package com.mashape.dao;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -79,7 +80,7 @@ public class TaskDaoMongoImpl implements TaskDao {
     @Override
     public boolean update(final Task task) throws Exception {
 
-        if (task == null || task.getId() == null) {
+        if (task == null || Strings.isNullOrEmpty(task.getId())) {
             throw new NotUpdatableException("Task cannot be updated : " + task);
         }
 
