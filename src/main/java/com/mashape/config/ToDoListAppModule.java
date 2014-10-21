@@ -5,7 +5,6 @@ import com.mashape.common.SearchlyIndexerImpl;
 import com.mashape.common.SearchlySearcherImpl;
 import com.mashape.common.TaskToMongoObjMapper;
 import com.mashape.dao.TaskDaoWithIndexingImpl;
-import com.mashape.dao.TaskDaoWithNotificationImpl;
 import com.mashape.interfaces.Indexer;
 import com.mashape.interfaces.NotificationService;
 import com.mashape.interfaces.Searcher;
