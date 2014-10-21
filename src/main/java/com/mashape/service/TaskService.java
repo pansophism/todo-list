@@ -3,8 +3,6 @@ package com.mashape.service;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.mashape.domain.Task;
-import com.mashape.exception.CannotInsertException;
-import com.mashape.exception.NotUpdatableException;
 import com.mashape.exception.TaskNotFoundException;
 import com.mashape.interfaces.TaskDao;
 import org.slf4j.Logger;

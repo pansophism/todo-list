@@ -23,6 +23,7 @@ public class TaskDaoWithIndexingImpl extends TaskDaoMongoImpl {
 
     private static final Logger LOG = LoggerFactory.getLogger(TaskDaoWithIndexingImpl.class);
 
+    boolean notify = AppConfig.getInstance().getBoolean("notification.enable.key", false);
     private final Indexer indexer;
     private final NotificationService notificationService;
 
@@ -49,16 +50,14 @@ public class TaskDaoWithIndexingImpl extends TaskDaoMongoImpl {
     @Override
     public boolean update(Task task) throws Exception {
 
-        if(task == null || task.getId() == null) {
+        if (task == null || task.getId() == null) {
             throw new NotUpdatableException("Task cannot be updated : " + task.toString());
         }
 
         try {
             Task oldTask = get(task.getId());
 
-            if(AppConfig.getInstance().getBoolean("notification.enable.key", false)
-                    && task.isDone()
-                    && !oldTask.isDone()) {
+            if (notify && task.isDone() && !oldTask.isDone()) {
 
                 notificationService.notify(new Message("+14152269668", "Task done : " + task));
             }

@@ -74,7 +74,7 @@ public class TaskDaoMongoImpl implements TaskDao {
     @Override
     public boolean update(final Task task) throws Exception {
 
-        if(task == null || task.getId() == null) {
+        if (task == null || task.getId() == null) {
             throw new NotUpdatableException("Task cannot be updated : " + task.toString());
         }
 

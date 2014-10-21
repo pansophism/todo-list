@@ -34,12 +34,13 @@ public class ToDoListAppModule extends JerseyServletModule {
 
     @Provides
     public JestClient getJestClient() {
-        String connectionUrl
-                = CONFIG.getString("searchly.url");
+        String connectionUrl = CONFIG.getString("searchly.url");
         JestClientFactory factory = new JestClientFactory();
+
         factory.setHttpClientConfig(new HttpClientConfig.Builder(connectionUrl)
                 .multiThreaded(true)
                 .build());
+
         return factory.getObject();
     }
 
@@ -58,8 +59,8 @@ public class ToDoListAppModule extends JerseyServletModule {
     @Provides
     MongoClient provideMongoClient() throws UnknownHostException {
         return new MongoClient(
-                CONFIG.getString("mongodb.server", "localhost"),
-                CONFIG.getInt("mongodb.port", 27017));
+                CONFIG.getString("mongodb.server"),
+                CONFIG.getInt("mongodb.port"));
     }
 
     @Override

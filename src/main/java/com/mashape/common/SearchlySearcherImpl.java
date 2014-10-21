@@ -32,8 +32,8 @@ public class SearchlySearcherImpl extends SearchlyBase implements Searcher {
         searchSourceBuilder.query(QueryBuilders.queryString(query));
 
         Search search = new Search.Builder(searchSourceBuilder.toString())
-                .addIndex(indexName)
-                .addType(type)
+                .addIndex(INDEX_NAME)
+                .addType(INDEX_TYPE)
                 .build();
 
         return performSearch(search);
@@ -45,8 +45,8 @@ public class SearchlySearcherImpl extends SearchlyBase implements Searcher {
         searchSourceBuilder.query(QueryBuilders.termQuery(filed.toString(), value));
 
         Search search = new Search.Builder(searchSourceBuilder.toString())
-                .addIndex(indexName)
-                .addType(type)
+                .addIndex(INDEX_NAME)
+                .addType(INDEX_TYPE)
                 .build();
 
         return performSearch(search);

@@ -45,8 +45,8 @@ public class SearchService {
     @Path("/{field}/{keyword}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public final Response searchByField(
-         @PathParam("field") String field,
-         @PathParam("keyword") String keyword) throws Exception {
+            @PathParam("field") String field,
+            @PathParam("keyword") String keyword) throws Exception {
 
         Iterable<Task> tasks = searcher.searchByField(Constants.Fileds.forValue(field), keyword);
         GenericEntity<Iterable<Task>> entity = new GenericEntity<Iterable<Task>>(tasks) {
