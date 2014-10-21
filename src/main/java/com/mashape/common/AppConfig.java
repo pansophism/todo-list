@@ -31,6 +31,7 @@ public class AppConfig extends CompositeConfiguration {
     private static void initProperties() {
         instance = new AppConfig();
         instance.addConfiguration(new SystemConfiguration());
+
         try {
             instance.addConfiguration(new PropertiesConfiguration("instance.properties"));
         } catch (ConfigurationException e) {
