@@ -10,5 +10,6 @@ public interface Searcher {
 
     Iterable<Task> search(String query) throws Exception;
 
-    Iterable<Task> searchByField(Constants.Fileds filed, String value) throws Exception;
+    Iterable<Task> searchByField(Constants.Fileds filed, String value)
+            throws Exception;
 }

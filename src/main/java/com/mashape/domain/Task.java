@@ -23,9 +23,17 @@ public class Task {
     public Task() {
     }
 
-    public Task(final String taskId, final String title, final String content, final boolean done) {
-        checkArgument(!Strings.isNullOrEmpty(taskId), "Task ID must not be empty", taskId);
-        checkNotNull(title, "Task title cannot be null.", title);
+    public Task(
+            final String taskId,
+            final String title,
+            final String content,
+            final boolean done) {
+
+        checkArgument(
+                !Strings.isNullOrEmpty(taskId), "Task ID must not be empty", taskId);
+
+        checkNotNull(
+                title, "Task title cannot be null.", title);
 
         this.title = title;
         this.content = content;
@@ -33,40 +41,40 @@ public class Task {
         this.id = taskId;
     }
 
-    public String getId() {
+    public final String getId() {
         return id;
     }
 
-    public String getTitle() {
+    public final String getTitle() {
         return title;
     }
 
-    public void setId(final String taskId) {
+    public final void setId(final String taskId) {
         this.id = taskId;
     }
 
-    public void setTitle(final String title) {
+    public final void setTitle(final String title) {
         this.title = title;
     }
 
-    public String getContent() {
+    public final String getContent() {
         return content;
     }
 
-    public void setContent(final String content) {
+    public final void setContent(final String content) {
         this.content = content;
     }
 
-    public boolean isDone() {
+    public final boolean isDone() {
         return done;
     }
 
-    public void setDone(final boolean done) {
+    public final void setDone(final boolean done) {
         this.done = done;
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return Objects.toStringHelper(this)
                 .add(Constants.Fileds.ID.value(), getId())
                 .add(Constants.Fileds.TITLE.value(), getTitle())
@@ -76,12 +84,12 @@ public class Task {
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return Objects.hashCode(getId(), getContent(), getTitle());
     }
 
     @Override
-    public boolean equals(final Object other) {
+    public final boolean equals(final Object other) {
         if (this == other) {
             return true;
         }

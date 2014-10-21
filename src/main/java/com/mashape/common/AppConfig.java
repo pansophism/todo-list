@@ -15,7 +15,9 @@ public class AppConfig extends CompositeConfiguration {
     private static final Logger LOG = LoggerFactory.getLogger(AppConfig.class);
     private static AppConfig instance;
 
-    private static class ConfigurationNotFoundException extends RuntimeException {
+    private static final class ConfigurationNotFoundException
+            extends RuntimeException {
+
         private ConfigurationNotFoundException(final String message) {
             super(message);
         }
@@ -33,10 +35,15 @@ public class AppConfig extends CompositeConfiguration {
         instance.addConfiguration(new SystemConfiguration());
 
         try {
-            instance.addConfiguration(new PropertiesConfiguration("instance.properties"));
+            instance.addConfiguration(
+                    new PropertiesConfiguration("instance.properties"));
+
         } catch (ConfigurationException e) {
+
             LOG.error("ConfigurationException : ", e);
-            throw new ConfigurationNotFoundException("Cannot find instance.properties. Not able to proceed.");
+
+            throw new ConfigurationNotFoundException(
+                    "Cannot find instance.properties. Not able to proceed.");
         }
     }
 }

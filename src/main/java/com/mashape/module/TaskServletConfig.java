@@ -10,7 +10,7 @@ import com.google.inject.servlet.GuiceServletContextListener;
 public class TaskServletConfig extends GuiceServletContextListener {
 
     @Override
-    protected Injector getInjector() {
+    protected final Injector getInjector() {
         return Guice.createInjector(
                 new ToDoListAppModule(),
                 new TaskModule(),

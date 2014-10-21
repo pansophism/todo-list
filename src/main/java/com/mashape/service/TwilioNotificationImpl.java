@@ -20,18 +20,22 @@ import java.util.List;
  */
 public class TwilioNotificationImpl implements NotificationService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TwilioNotificationImpl.class);
-    private static final String FROM_NUMBER = AppConfig.getInstance().getString("from.number");
+    private static final Logger LOG
+            = LoggerFactory.getLogger(TwilioNotificationImpl.class);
+
+    private static final String FROM_NUMBER
+            = AppConfig.getInstance().getString("from.number");
 
     private final TwilioRestClient client;
 
     @Inject
-    public TwilioNotificationImpl(TwilioRestClient client) {
+    public TwilioNotificationImpl(final TwilioRestClient client) {
         this.client = client;
     }
 
     @Override
-    public void notify(final com.mashape.domain.Message msg) throws TwilioRestException {
+    public void notify(final com.mashape.domain.Message msg)
+            throws TwilioRestException {
 
         MessageFactory messageFactory = client.getAccount().getMessageFactory();
 

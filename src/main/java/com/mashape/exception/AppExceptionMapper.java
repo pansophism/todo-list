@@ -13,10 +13,11 @@ import javax.ws.rs.ext.Provider;
 
 @Provider
 @Singleton
-public class AppExceptionMapper implements ExceptionMapper<TodoListGenericException> {
+public class AppExceptionMapper
+        implements ExceptionMapper<TodoListGenericException> {
 
     @Override
-    public Response toResponse(TodoListGenericException exception) {
+    public final Response toResponse(final TodoListGenericException exception) {
         return Response.status(exception.getStatusCode())
                 .entity(exception.getMessage())
                 .type(MediaType.APPLICATION_JSON).build();

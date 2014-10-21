@@ -21,18 +21,20 @@ import javax.ws.rs.core.Response;
 
 @Path("/query")
 public class SearchService {
-    private static final Logger LOG = LoggerFactory.getLogger(SearchService.class);
+    private static final Logger LOG
+            = LoggerFactory.getLogger(SearchService.class);
+
     private final Searcher searcher;
 
     @Inject
-    public SearchService(Searcher searcher) {
+    public SearchService(final Searcher searcher) {
         this.searcher = searcher;
     }
 
     @GET
     @Path("/{keyword}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public final Response searchByString(@PathParam("keyword") String keyword) throws Exception {
+    public final Response searchByString(@PathParam("keyword") final String keyword) throws Exception {
         LOG.info("Searching index for keyword : " + keyword);
         Iterable<Task> tasks = searcher.search(keyword);
         GenericEntity<Iterable<Task>> entity = new GenericEntity<Iterable<Task>>(tasks) {
@@ -45,8 +47,8 @@ public class SearchService {
     @Path("/{field}/{keyword}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public final Response searchByField(
-            @PathParam("field") String field,
-            @PathParam("keyword") String keyword) throws Exception {
+            @PathParam("field") final String field,
+            @PathParam("keyword") final String keyword) throws Exception {
 
         Iterable<Task> tasks = searcher.searchByField(Constants.Fileds.forValue(field), keyword);
         GenericEntity<Iterable<Task>> entity = new GenericEntity<Iterable<Task>>(tasks) {

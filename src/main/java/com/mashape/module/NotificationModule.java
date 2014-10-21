@@ -14,7 +14,7 @@ import javax.inject.Singleton;
  */
 public class NotificationModule extends AbstractModule {
 
-    private static AppConfig CONFIG = AppConfig.getInstance();
+    private static final AppConfig CONFIG = AppConfig.getInstance();
 
     @Provides
     TwilioRestClient provideTwiloRestClient() {
@@ -25,6 +25,8 @@ public class NotificationModule extends AbstractModule {
 
     @Override
     protected final void configure() {
-        bind(NotificationService.class).to(TwilioNotificationImpl.class).in(Singleton.class);
+        bind(NotificationService.class)
+                .to(TwilioNotificationImpl.class)
+                .in(Singleton.class);
     }
 }

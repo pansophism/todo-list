@@ -10,11 +10,11 @@ import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
  */
 public class ToDoListAppModule extends JerseyServletModule {
 
-    final ResourceConfig resourceConfig
+    private final ResourceConfig resourceConfig
             = new PackagesResourceConfig("com.mashape.service", "com.mashape.exception");
 
     @Override
-    protected void configureServlets() {
+    protected final void configureServlets() {
         super.configureServlets();
 
         for (Class<?> resource : resourceConfig.getClasses()) {

@@ -13,7 +13,7 @@ public class TaskToMongoObjMapper {
 
     private static final String IDKEY = "_id";
 
-    public DBObject toDBObject(Task task) {
+    public final DBObject toDBObject(final Task task) {
 
         BasicDBObjectBuilder builder = BasicDBObjectBuilder.start()
                 .append(Constants.Fileds.CONTENT.value(), task.getContent())
@@ -27,16 +27,21 @@ public class TaskToMongoObjMapper {
         return builder.get();
     }
 
-    public Task toTask(DBObject doc) {
+    public final Task toTask(final DBObject doc) {
         ObjectId objectId = (ObjectId) doc.get(IDKEY);
         Object isDoneField = doc.get(Constants.Fileds.DONE.value());
+
+
+        boolean isDone = false;
+        if(isDoneField != null) {
+            isDone = Boolean.valueOf(isDoneField.toString());
+        }
 
         Task task = new Task(
                 objectId.toString(),
                 doc.get(Constants.Fileds.TITLE.value()).toString(),
                 doc.get(Constants.Fileds.CONTENT.value()).toString(),
-                isDoneField != null ? Boolean.valueOf(isDoneField.toString()) : false
-        );
+                isDone);
 
         return task;
 

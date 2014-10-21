@@ -22,12 +22,12 @@ public class SearchlySearcherImpl extends SearchlyBase implements Searcher {
     private final JestClient client;
 
     @Inject
-    public SearchlySearcherImpl(JestClient client) {
+    public SearchlySearcherImpl(final JestClient client) {
         this.client = client;
     }
 
     @Override
-    public Iterable<Task> search(String query) throws Exception {
+    public final Iterable<Task> search(final String query) throws Exception {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.queryString(query));
 
@@ -40,7 +40,9 @@ public class SearchlySearcherImpl extends SearchlyBase implements Searcher {
     }
 
     @Override
-    public Iterable<Task> searchByField(Constants.Fileds filed, String value) throws Exception {
+    public final Iterable<Task> searchByField(
+            final Constants.Fileds filed, final String value) throws Exception {
+
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.termQuery(filed.toString(), value));
 
@@ -52,14 +54,15 @@ public class SearchlySearcherImpl extends SearchlyBase implements Searcher {
         return performSearch(search);
     }
 
-    private Iterable<Task> performSearch(Search search) throws Exception {
+    private final Iterable<Task> performSearch(final Search search) throws Exception {
         JestResult result = client.execute(search);
 
-        List<SearchResult.Hit<Task, Void>> hits = ((SearchResult) result).getHits(Task.class);
+        List<SearchResult.Hit<Task, Void>> hits
+                = ((SearchResult) result).getHits(Task.class);
 
         return Lists.transform(hits, new Function<SearchResult.Hit<Task, Void>, Task>() {
             @Override
-            public Task apply(SearchResult.Hit<Task, Void> aHit) {
+            public Task apply(final SearchResult.Hit<Task, Void> aHit) {
                 return aHit.source;
             }
         });

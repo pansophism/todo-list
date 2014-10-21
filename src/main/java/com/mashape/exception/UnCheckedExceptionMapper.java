@@ -14,11 +14,19 @@ import javax.ws.rs.ext.Provider;
 @Provider
 @Singleton
 public class UnCheckedExceptionMapper implements ExceptionMapper<Throwable> {
+    private final static int CLIENT_ERROR = 400;
+    private final static int SERVER_ERROR = 500;
 
     @Override
-    public Response toResponse(Throwable exception) {
+    public final Response toResponse(final Throwable exception) {
 
-        return Response.status((exception instanceof TodoListGenericException) ? 400 : 500)
+        int errorCode = SERVER_ERROR;
+
+        if(exception instanceof TodoListGenericException) {
+            errorCode = CLIENT_ERROR;
+        }
+
+        return Response.status(errorCode)
                 .entity(exception.getMessage())
                 .type(MediaType.APPLICATION_JSON)
                 .build();

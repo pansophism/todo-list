@@ -29,10 +29,10 @@ public class TaskDaoWithIndexingImpl extends TaskDaoMongoImpl {
 
     @Inject
     public TaskDaoWithIndexingImpl(
-            MongoClient mongo,
-            TaskToMongoObjMapper mapper,
-            Indexer indexer,
-            NotificationService notificationService) {
+            final MongoClient mongo,
+            final TaskToMongoObjMapper mapper,
+            final Indexer indexer,
+            final NotificationService notificationService) {
 
         super(mongo, mapper);
         this.indexer = indexer;
@@ -40,7 +40,7 @@ public class TaskDaoWithIndexingImpl extends TaskDaoMongoImpl {
     }
 
     @Override
-    public Task insert(Task task) throws Exception {
+    public final Task insert(final Task task) throws Exception {
         Task aTask = super.insert(task);
         indexer.index(task);
 
@@ -48,7 +48,7 @@ public class TaskDaoWithIndexingImpl extends TaskDaoMongoImpl {
     }
 
     @Override
-    public boolean update(Task task) throws Exception {
+    public final boolean update(final Task task) throws Exception {
 
         if (task == null || task.getId() == null) {
             throw new NotUpdatableException("Task cannot be updated : " + task);
@@ -74,7 +74,7 @@ public class TaskDaoWithIndexingImpl extends TaskDaoMongoImpl {
     }
 
     @Override
-    public void delete(String id) throws Exception {
+    public final void delete(final String id) throws Exception {
         super.delete(id);
         indexer.delete(id);
     }

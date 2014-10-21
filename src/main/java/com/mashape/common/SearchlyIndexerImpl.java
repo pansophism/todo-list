@@ -20,20 +20,26 @@ public class SearchlyIndexerImpl extends SearchlyBase implements Indexer {
     }
 
     @Override
-    public void update(Task task) throws Exception {
-        Update update = new Update.Builder(task).index(INDEX_NAME).type(INDEX_TYPE).build();
+    public final void update(final Task task) throws Exception {
+        Update update
+                = new Update.Builder(task).index(INDEX_NAME).type(INDEX_TYPE).build();
+
         client.execute(update);
     }
 
     @Override
-    public void delete(String taskID) throws Exception {
-        Delete delete = new Delete.Builder(taskID).index(INDEX_NAME).type(INDEX_TYPE).build();
+    public final void delete(final String taskID) throws Exception {
+        Delete delete
+                = new Delete.Builder(taskID).index(INDEX_NAME).type(INDEX_TYPE).build();
+
         client.execute(delete);
     }
 
     @Override
-    public void index(Task task) throws Exception {
-        Index index = new Index.Builder(task).index(INDEX_NAME).type(INDEX_TYPE).build();
+    public final void index(final Task task) throws Exception {
+        Index index
+                = new Index.Builder(task).index(INDEX_NAME).type(INDEX_TYPE).build();
+
         client.execute(index);
     }
 

@@ -9,7 +9,12 @@ import com.mashape.exception.CannotInsertException;
 import com.mashape.exception.NotUpdatableException;
 import com.mashape.exception.TaskNotFoundException;
 import com.mashape.interfaces.TaskDao;
-import com.mongodb.*;
+import com.mongodb.BasicDBObjectBuilder;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
+import com.mongodb.MongoClient;
+import com.mongodb.WriteResult;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,21 +29,20 @@ import java.util.List;
 @Singleton
 public class TaskDaoMongoImpl implements TaskDao {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TaskDaoMongoImpl.class);
+    private static final Logger LOG
+            = LoggerFactory.getLogger(TaskDaoMongoImpl.class);
 
     protected DBCollection collection;
     protected TaskToMongoObjMapper mapper;
 
     @Inject
-    public TaskDaoMongoImpl(MongoClient mongo, TaskToMongoObjMapper mapper) {
+    public TaskDaoMongoImpl(final MongoClient mongo, final TaskToMongoObjMapper mapper) {
         this.collection = mongo.getDB("todo-list").getCollection("task");
         this.mapper = mapper;
     }
 
     @Override
-    public
-    @Nonnull
-    Iterable<Task> getAll() {
+    public final @Nonnull Iterable<Task> getAll() {
         List<Task> data = Lists.newArrayList();
         DBCursor cursor = collection.find();
         while (cursor.hasNext()) {
@@ -65,7 +69,8 @@ public class TaskDaoMongoImpl implements TaskDao {
         }
 
         if (data == null) {
-            throw new TaskNotFoundException("No task can be retrieved using the id you offered: : " + id);
+            throw new TaskNotFoundException(
+                    "No task can be retrieved using the id you offered: : " + id);
         }
 
         return mapper.toTask(data);
@@ -81,12 +86,15 @@ public class TaskDaoMongoImpl implements TaskDao {
         try {
             get(task.getId());
 
-            DBObject query = BasicDBObjectBuilder.start().append("_id", new ObjectId(task.getId())).get();
+            DBObject query = BasicDBObjectBuilder
+                    .start().append("_id", new ObjectId(task.getId())).get();
+
             WriteResult result = this.collection.update(query, mapper.toDBObject(task));
             result.isUpdateOfExisting();
         } catch (Exception e) {
             LOG.error("Exception while updating task " + task, e);
-            throw new NotUpdatableException("Task cannot be updated : " + task.toString() + " ERROR : " + e.getMessage());
+            throw new NotUpdatableException(
+                    "Task cannot be updated : " + task.toString() + " ERROR : " + e.getMessage());
         }
 
         return true;
@@ -113,7 +121,9 @@ public class TaskDaoMongoImpl implements TaskDao {
     public void delete(final String id) throws Exception {
         get(id);
 
-        DBObject query = BasicDBObjectBuilder.start().append("_id", new ObjectId(id)).get();
+        DBObject query =
+                BasicDBObjectBuilder.start().append("_id", new ObjectId(id)).get();
+
         this.collection.remove(query);
     }
 

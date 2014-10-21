@@ -6,12 +6,12 @@ import javax.ws.rs.core.Response;
  * Created by yxzhao on 10/19/14.
  */
 public class NotUpdatableException extends TodoListGenericException {
-    public NotUpdatableException(String message) {
+    public NotUpdatableException(final String message) {
         super(message);
     }
 
     @Override
-    int getStatusCode() {
+    final int getStatusCode() {
         return Response.Status.BAD_REQUEST.getStatusCode();
     }
 }

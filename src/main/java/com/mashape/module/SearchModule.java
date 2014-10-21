@@ -18,7 +18,7 @@ import javax.inject.Singleton;
  */
 public class SearchModule extends AbstractModule {
 
-    private static AppConfig CONFIG = AppConfig.getInstance();
+    private static final AppConfig CONFIG = AppConfig.getInstance();
 
     @Provides
     public JestClient getJestClient() {
@@ -33,8 +33,13 @@ public class SearchModule extends AbstractModule {
     }
 
     @Override
-    protected void configure() {
-        bind(Searcher.class).to(SearchlySearcherImpl.class).in(Singleton.class);
-        bind(Indexer.class).to(SearchlyIndexerImpl.class).in(Singleton.class);
+    protected final void configure() {
+        bind(Searcher.class)
+                .to(SearchlySearcherImpl.class)
+                .in(Singleton.class);
+
+        bind(Indexer.class)
+                .to(SearchlyIndexerImpl.class)
+                .in(Singleton.class);
     }
 }

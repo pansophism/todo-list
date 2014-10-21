@@ -22,7 +22,9 @@ public final class Launcher {
     public static void main(final String[] args) throws Exception {
         Server server = new Server(PORT);
 
-        ServletContextHandler context = new ServletContextHandler(server, "/", ServletContextHandler.SESSIONS);
+        ServletContextHandler context
+                = new ServletContextHandler(server, "/", ServletContextHandler.SESSIONS);
+
         context.addFilter(GuiceFilter.class, "/*", null);
         context.addEventListener(new TaskServletConfig());
         context.addServlet(DefaultServlet.class, "/");

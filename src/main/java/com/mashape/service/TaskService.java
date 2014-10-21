@@ -8,7 +8,14 @@ import com.mashape.interfaces.TaskDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -21,11 +28,12 @@ import java.util.List;
 @Path("/tasks")
 public class TaskService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TaskService.class);
+    private static final Logger LOG
+            = LoggerFactory.getLogger(TaskService.class);
     private final TaskDao taskDao;
 
     @Inject
-    public TaskService(TaskDao taskDao) {
+    public TaskService(final TaskDao taskDao) {
         this.taskDao = taskDao;
     }
 
@@ -35,8 +43,8 @@ public class TaskService {
     public final Response listTasks() {
         LOG.info("listing all tasks.");
         Iterable<Task> tasks = taskDao.getAll();
-        GenericEntity<List<Task>> entity = new GenericEntity<List<Task>>(Lists.newArrayList(tasks)) {
-        };
+        GenericEntity<List<Task>> entity
+                = new GenericEntity<List<Task>>(Lists.newArrayList(tasks)) {};
 
         return Response.status(Response.Status.OK).entity(entity).build();
     }
@@ -44,12 +52,13 @@ public class TaskService {
     @GET
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public final Response findTask(@PathParam("id") String id) throws TaskNotFoundException {
+    public final Response findTask(@PathParam("id") final String id)
+            throws TaskNotFoundException {
         LOG.info("Trying to find task : " + id);
         Task aTask = taskDao.get(id);
 
-        GenericEntity<Task> entity = new GenericEntity<Task>(aTask) {
-        };
+        GenericEntity<Task> entity
+                = new GenericEntity<Task>(aTask) {};
 
         return Response.status(Response.Status.OK).entity(entity).build();
     }
@@ -57,26 +66,31 @@ public class TaskService {
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public final Response updateTask(Task task) throws Exception {
+    public final Response updateTask(final Task task) throws Exception {
         LOG.info("Trying to update task : " + task);
 
         boolean result = taskDao.update(task);
-        Response.Status status = result ? Response.Status.ACCEPTED : Response.Status.BAD_REQUEST;
+        Response.Status status = result
+                ? Response.Status.ACCEPTED : Response.Status.BAD_REQUEST;
+
         return Response.status(status).build();
     }
 
     @POST
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
-    public final Response insertTask(Task task) throws Exception {
+    public final Response insertTask(final Task task) throws Exception {
         LOG.info("Trying to insert task : " + task);
 
-        return Response.status(Response.Status.CREATED).entity(taskDao.insert(task)).build();
+        return Response.status(Response.Status.CREATED)
+                .entity(taskDao.insert(task)).build();
     }
 
     @DELETE
     @Path("/{id}")
-    public final Response deleteTask(@PathParam("id") String taskID) throws Exception {
+    public final Response deleteTask(@PathParam("id") String taskID)
+            throws Exception {
+
         LOG.info("Trying to delete task : " + taskID);
 
         taskDao.delete(taskID);
