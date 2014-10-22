@@ -78,7 +78,7 @@ public class TaskDaoMongoImpl implements TaskDao {
     }
 
     @Override
-    public boolean update(final Task task) throws Exception {
+    public final boolean update(final Task task) throws Exception {
 
         if (task == null || Strings.isNullOrEmpty(task.getId())) {
             throw new NotUpdatableException("Task cannot be updated : " + task);
@@ -102,7 +102,7 @@ public class TaskDaoMongoImpl implements TaskDao {
     }
 
     @Override
-    public Task insert(final Task task) throws Exception {
+    public final Task insert(final Task task) throws Exception {
 
         try {
             DBObject doc = mapper.toDBObject(task);
@@ -119,7 +119,7 @@ public class TaskDaoMongoImpl implements TaskDao {
     }
 
     @Override
-    public void delete(final String id) throws Exception {
+    public final void delete(final String id) throws Exception {
         get(id);
 
         DBObject query =

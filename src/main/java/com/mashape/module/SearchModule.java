@@ -21,7 +21,7 @@ public class SearchModule extends AbstractModule {
     private static final AppConfig CONFIG = AppConfig.getInstance();
 
     @Provides
-    public JestClient getJestClient() {
+    final JestClient getJestClient() {
         String connectionUrl = CONFIG.getString("searchly.url");
         JestClientFactory factory = new JestClientFactory();
 

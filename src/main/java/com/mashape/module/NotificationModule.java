@@ -17,7 +17,7 @@ public class NotificationModule extends AbstractModule {
     private static final AppConfig CONFIG = AppConfig.getInstance();
 
     @Provides
-    TwilioRestClient provideTwiloRestClient() {
+    final TwilioRestClient provideTwiloRestClient() {
         return new TwilioRestClient(
                 CONFIG.getString("twilio.account.sid"),
                 CONFIG.getString("twilio.auth.token"));
