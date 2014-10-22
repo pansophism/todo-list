@@ -3,6 +3,7 @@ package com.mashape.service;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.mashape.domain.Task;
+import com.mashape.exception.NotUpdatableException;
 import com.mashape.exception.TaskNotFoundException;
 import com.mashape.interfaces.TaskDao;
 import org.slf4j.Logger;
@@ -61,6 +62,44 @@ public class TaskService {
                 = new GenericEntity<Task>(aTask) {};
 
         return Response.status(Response.Status.OK).entity(entity).build();
+    }
+
+    @PUT
+    @Path("/done/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public final Response markTaskDone(@PathParam("id") final String id) throws Exception {
+        LOG.info("Trying to mark task done : " + id);
+
+        Task oldTask = taskDao.get(id);
+        if(oldTask.isDone()) {
+            throw new NotUpdatableException("Task was already done : " + oldTask);
+        }
+
+        oldTask.setDone(true);
+        boolean result = taskDao.update(oldTask);
+        Response.Status status = result
+                ? Response.Status.ACCEPTED : Response.Status.BAD_REQUEST;
+
+        return Response.status(status).build();
+    }
+
+    @PUT
+    @Path("/notdone/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public final Response markTaskNotDone(@PathParam("id") final String id) throws Exception {
+        LOG.info("Trying to mark task as not done : " + id);
+
+        Task oldTask = taskDao.get(id);
+        if(!oldTask.isDone()) {
+            throw new NotUpdatableException("Task was indeed not done : " + oldTask);
+        }
+
+        oldTask.setDone(false);
+        boolean result = taskDao.update(oldTask);
+        Response.Status status = result
+                ? Response.Status.ACCEPTED : Response.Status.BAD_REQUEST;
+
+        return Response.status(status).build();
     }
 
     @PUT
