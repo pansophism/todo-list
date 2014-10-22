@@ -49,7 +49,6 @@ public class SearchlyIndexerImpl extends SearchlyBase implements Indexer {
                 }
             }
         });
-        ;
     }
 
     @Override
