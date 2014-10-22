@@ -28,7 +28,10 @@ public class SearchlySearcherImpl extends SearchlyBase implements Searcher {
     @Override
     public final Iterable<Task> search(final String query) throws Exception {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(QueryBuilders.queryString(query));
+        searchSourceBuilder.query(
+                QueryBuilders.queryString(query)
+                        .field(Constants.Fileds.TITLE.value(), 2)
+                        .field(Constants.Fileds.CONTENT.value(), 1));
 
         Search search = new Search.Builder(searchSourceBuilder.toString())
                 .addIndex(INDEX_NAME)
