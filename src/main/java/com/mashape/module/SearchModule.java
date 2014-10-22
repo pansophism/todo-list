@@ -2,6 +2,7 @@ package com.mashape.module;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import com.google.inject.Singleton;
 import com.mashape.common.AppConfig;
 import com.mashape.common.SearchlyIndexerImpl;
 import com.mashape.common.SearchlySearcherImpl;
@@ -10,8 +11,6 @@ import com.mashape.interfaces.Searcher;
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestClientFactory;
 import io.searchbox.client.config.HttpClientConfig;
-
-import javax.inject.Singleton;
 
 /**
  * Created by yxzhao on 10/20/14.

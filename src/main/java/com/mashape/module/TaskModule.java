@@ -2,13 +2,13 @@ package com.mashape.module;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import com.google.inject.Singleton;
 import com.mashape.common.AppConfig;
 import com.mashape.common.TaskToMongoObjMapper;
 import com.mashape.dao.TaskDaoWithIndexingImpl;
 import com.mashape.interfaces.TaskDao;
 import com.mongodb.MongoClient;
 
-import javax.inject.Singleton;
 import java.net.UnknownHostException;
 
 /**

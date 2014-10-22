@@ -2,6 +2,7 @@ package com.mashape.common;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import com.google.inject.Inject;
 import com.mashape.domain.Task;
 import com.mashape.interfaces.Searcher;
 import io.searchbox.client.JestClient;
@@ -11,7 +12,6 @@ import io.searchbox.core.SearchResult;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 
-import javax.inject.Inject;
 import java.util.List;
 
 /**
