@@ -11,7 +11,6 @@ import io.searchbox.core.SearchResult;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.List;
 
@@ -54,7 +53,7 @@ public class SearchlySearcherImpl extends SearchlyBase implements Searcher {
         return performSearch(search);
     }
 
-    private final Iterable<Task> performSearch(final Search search) throws Exception {
+    private Iterable<Task> performSearch(final Search search) throws Exception {
         JestResult result = client.execute(search);
 
         List<SearchResult.Hit<Task, Void>> hits

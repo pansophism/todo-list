@@ -16,22 +16,22 @@ import java.net.UnknownHostException;
  */
 public class TaskModule extends AbstractModule {
 
-    private static AppConfig CONFIG = AppConfig.getInstance();
+    private static final AppConfig CONFIG = AppConfig.getInstance();
 
     @Provides
-    TaskToMongoObjMapper providesMapper() {
+    final TaskToMongoObjMapper providesMapper() {
         return new TaskToMongoObjMapper();
     }
 
     @Provides
-    MongoClient provideMongoClient() throws UnknownHostException {
+    final MongoClient provideMongoClient() throws UnknownHostException {
         return new MongoClient(
                 CONFIG.getString("mongodb.server"),
                 CONFIG.getInt("mongodb.port"));
     }
 
     @Override
-    protected void configure() {
+    protected final void configure() {
         bind(TaskDao.class).to(TaskDaoWithIndexingImpl.class).in(Singleton.class);
     }
 }

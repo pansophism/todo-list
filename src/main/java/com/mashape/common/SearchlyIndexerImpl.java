@@ -15,7 +15,7 @@ public class SearchlyIndexerImpl extends SearchlyBase implements Indexer {
     private final JestClient client;
 
     @Inject
-    public SearchlyIndexerImpl(JestClient client) {
+    public SearchlyIndexerImpl(final JestClient client) {
         this.client = client;
     }
 

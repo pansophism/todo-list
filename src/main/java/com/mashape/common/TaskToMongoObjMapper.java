@@ -33,7 +33,7 @@ public class TaskToMongoObjMapper {
 
 
         boolean isDone = false;
-        if(isDoneField != null) {
+        if (isDoneField != null) {
             isDone = Boolean.valueOf(isDoneField.toString());
         }
 

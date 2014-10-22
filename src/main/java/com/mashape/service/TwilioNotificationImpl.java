@@ -34,7 +34,7 @@ public class TwilioNotificationImpl implements NotificationService {
     }
 
     @Override
-    public void notify(final com.mashape.domain.Message msg)
+    public final void notify(final com.mashape.domain.Message msg)
             throws TwilioRestException {
 
         MessageFactory messageFactory = client.getAccount().getMessageFactory();

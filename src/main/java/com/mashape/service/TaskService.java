@@ -88,7 +88,7 @@ public class TaskService {
 
     @DELETE
     @Path("/{id}")
-    public final Response deleteTask(@PathParam("id") String taskID)
+    public final Response deleteTask(@PathParam("id") final String taskID)
             throws Exception {
 
         LOG.info("Trying to delete task : " + taskID);

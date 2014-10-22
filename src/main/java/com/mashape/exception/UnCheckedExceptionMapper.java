@@ -14,8 +14,8 @@ import javax.ws.rs.ext.Provider;
 @Provider
 @Singleton
 public class UnCheckedExceptionMapper implements ExceptionMapper<Throwable> {
-    private final static int CLIENT_ERROR = 400;
-    private final static int SERVER_ERROR = 500;
+    private static final int CLIENT_ERROR = 400;
+    private static final int SERVER_ERROR = 500;
 
     @Override
     public final Response toResponse(final Throwable exception) {
